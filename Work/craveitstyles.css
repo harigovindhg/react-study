@@ -1,0 +1,36 @@
+body {
+    font-family: sans-serif;
+}
+
+.header {
+    position: fixed;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    border-radius: 10px;
+    background-color: #fffa;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 20px #0003;
+    display: flex;
+    width: 35%;
+    height: 10%;
+    transition: width 1s;
+
+    a {
+        transition: all .2s;
+        position: relative;
+        padding: 1rem 2rem;
+        border-radius: 5px;
+        text-decoration: none;
+        color: unset;
+
+        &:hover {
+            background-color: #eee;
+        }
+    }
+
+    &:hover {
+        width: 80%;
+    }
+}
