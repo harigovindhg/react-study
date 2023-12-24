@@ -21,10 +21,44 @@ const HeadingComponent = () => {
     );
 }
 
+const Logo = () => {
+    return (
+        <div className='headerContent'>
+            <img className="logo" src={require('/assets/images/H.webp')} alt='Logo' />
+        </div>
+    );
+}
+
+const SearchBar = () => {
+    return (
+        <div className='headerContent'>
+            <input className='search' placeholder='Search'></input>
+        </div>
+    )
+}
+
+const Avatar = () => {
+    return (
+        <div className='headerContent'>
+            <img className="avatar" alt='Avatar' src={require('/assets/images/Avatar.webp')} />
+        </div>
+    )
+}
+
+const HeaderComponent = () => {
+    return (
+        <div id='pageHeader' className='header'>
+            <Logo />
+            <SearchBar />
+            <Avatar />
+        </div>
+    );
+}
+
 // Another way for writing arrow functions
 const HeadingComponent2 = () => (<h1 id="heading">Hello World from React Functional Component</h1>)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // When rendering a functional component, we need to use the tags <> to denote that this is a component
-root.render(<HeadingComponent />);
+root.render(<HeaderComponent />);
