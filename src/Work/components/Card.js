@@ -1,74 +1,9 @@
-// Food Delivery portal
-import React from 'react'
-import ReactDom from 'react-dom/client'
-import restaurantList from '../assets/mock/restaurantList.json';
-/**
- * - Header
- *  - Logo
- *  - NavItems
- * - Body
- *  - Search
- *  - CardContainer
- *    - Card
- * - Footer
- *  - Copyright
- *  - Links
- *  - Address
- */
-function resizeHeaderOnScroll() {
-    const distanceY = window.scrollY || document.documentElement.scrollTop,
-        shrinkOn = 10,
-        headerElement = document.getElementById('header');
-
-    if (distanceY > shrinkOn) {
-        headerElement.classList.add("widen");
-    } else {
-        headerElement.classList.remove("widen");
-    }
-}
-
-window.addEventListener('scroll', resizeHeaderOnScroll);
-const Logo = () => {
-    return (
-        <div className='logo'>
-            <img src={require('../assets/images/craveitlogo.png')} alt='CraveIt' />
-        </div>
-    );
-}
-
-const NavItem = () => {
-    return (
-        <div className="navItem">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Profile</a>
-            <a href="#">Cart</a>
-        </div>
-    );
-}
-
-const Header = () => {
-    return (
-        <header id="header" className='header'>
-            <Logo />
-            <NavItem />
-        </header>
-    );
-}
-
-const SearchBar = () => {
-    return (
-        <div className='search'>
-            <input type='search' placeholder='Search for your favourite dishes' />
-        </div>
-    )
-}
-
+import { CDN_URL } from '../utils/constants';
 const Card = (props) => {
-    const {id, cloudinaryImageId, name, avgRating, sla, cuisines, costForTwo} = props?.info;    // optional chaining - defaults to undefined when the data is nullish: i.e, undefined or null
+    const { id, cloudinaryImageId, name, avgRating, sla, cuisines, costForTwo } = props?.info;    // optional chaining - defaults to undefined when the data is nullish: i.e, undefined or null
     return (
         <div className='rest-card' id={`cardcontainer_${id}`}>
-            <div className='card-content' key={id} style={{ backgroundImage: `url(https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId})` }}>
+            <div className='card-content' key={id} style={{ backgroundImage: `url(${CDN_URL}${cloudinaryImageId})` }}>
                 <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_${id}`} >
                     <div className='rest-name'>
                         <h3>{name}</h3>
@@ -101,32 +36,4 @@ const Card = (props) => {
     )
 }
 
-const CardContainer = () => {
-    return (
-        <div className='rest-card-container'>
-            {restaurantList.map((item) => (
-                <Card {...item} key={item.info.id} id={`userCard_${item.info.id}`} />
-            ))}
-        </div>
-    )
-}
-
-const Body = () => {
-    return (
-        <div className="body">
-            <SearchBar />
-            <CardContainer />
-        </div>
-    )
-}
-const AppContainer = () => {
-    return (
-        <div className="App">
-            <Header />
-            <Body />
-        </div>
-    )
-}
-
-const root = ReactDom.createRoot(document.getElementById('root'));
-root.render(<AppContainer />);
+export default Card;
