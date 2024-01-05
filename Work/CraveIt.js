@@ -69,7 +69,7 @@ const Card = (props) => {
     return (
         <div className='rest-card' id={`cardcontainer_${id}`}>
             <div className='card-content' key={id} style={{ backgroundImage: `url(https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId})` }}>
-                <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_   ${id}`} >
+                <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_${id}`} >
                     <div className='rest-name'>
                         <h3>{name}</h3>
                     </div>
