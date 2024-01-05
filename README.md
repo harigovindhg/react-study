@@ -1,3 +1,3 @@
 # React Training Learnings
 
-I will commit the learnings from React here
+Repo for tracking my React learnings
