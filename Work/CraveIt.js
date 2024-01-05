@@ -65,16 +65,17 @@ const SearchBar = () => {
 }
 
 const Card = (props) => {
+    const {id, cloudinaryImageId, name, avgRating, sla, cuisines, costForTwo} = props?.info;    // optional chaining - defaults to undefined when the data is nullish: i.e, undefined or null
     return (
-        <div className='rest-card' id={`cardcontainer_${props.id}`}>
-            <div className='card-content' key={props.id} style={{ backgroundImage: `url(https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${props.cloudinaryImageId})` }}>
-                <div className='rest-details' id={`cardcontainerdetails_${props.id}`} key={`card_   ${props.id}`} >
+        <div className='rest-card' id={`cardcontainer_${id}`}>
+            <div className='card-content' key={id} style={{ backgroundImage: `url(https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/${cloudinaryImageId})` }}>
+                <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_   ${id}`} >
                     <div className='rest-name'>
-                        <h3>{props.name}</h3>
+                        <h3>{name}</h3>
                     </div>
                     <div className='rest-subdetails'>
                         <div style={{ display: 'flex' }}>
-                            {`${props.avgRating}`}
+                            {`${avgRating}`}
                             <div style={{ margin: '-2px 5px 0px 5px' }}>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" role="img" aria-hidden="true" strokecolor="rgba(2, 6, 12, 0.92)" fillcolor="rgba(2, 6, 12, 0.92)">
                                     <circle cx="10" cy="10" r="9" fill="url(#StoreRating20_svg__paint0_linear_32982_71567)"></circle>
@@ -89,10 +90,10 @@ const Card = (props) => {
                                     </defs>
                                 </svg>
                             </div>
-                            <strong>{` • ${props.sla.deliveryTime} mins`}</strong>
+                            <strong>{` • ${sla.deliveryTime} mins`}</strong>
                         </div>
-                        <p>{`${(props.cuisines.length > 3) ? `${props.cuisines.slice(0, 3)}, ...` : props.cuisines}`}</p>
-                        <p>{`${props.costForTwo}`}</p>
+                        <p>{`${(cuisines.length > 3) ? `${cuisines.slice(0, 3)}, ...` : cuisines}`}</p>
+                        <p>{`${costForTwo}`}</p>
                     </div>
                 </div>
             </div>
@@ -103,10 +104,9 @@ const Card = (props) => {
 const CardContainer = () => {
     return (
         <div className='rest-card-container'>
-            {restaurantList.map((item, index) => {
-                return <Card {...item.info} key={`${index}_${item.info.id}`}/>
-            })}
-            {/* <Card name={'Aattutheeram Kerala restaurant'} rating={'4.7'} cuisine={'Kerala, Seafood, Biryani, Chinese'} image={'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/ff9cb9c7130ae2c4697f8274e2488795'} /> */}
+            {restaurantList.map((item) => (
+                <Card {...item} key={item.info.id}/>
+            ))}
         </div>
     )
 }
