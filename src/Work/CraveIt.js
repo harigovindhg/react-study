@@ -1,6 +1,7 @@
 // Food Delivery portal
 import React from 'react'
 import ReactDom from 'react-dom/client'
+import { StrictMode } from 'react';
 import Header from '../Work/components/Header.js';
 import Body from '../Work/components/Body.js';
 
@@ -41,4 +42,8 @@ const AppContainer = () => {
 }
 
 const root = ReactDom.createRoot(document.getElementById('root'));
-root.render(<AppContainer />);
+root.render(
+    <StrictMode >
+        <AppContainer />
+    </StrictMode>
+);

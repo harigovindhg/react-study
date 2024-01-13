@@ -4,9 +4,23 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: "Uzi";
+    src: url("https://raw.githubusercontent.com/vickkie/uzitrake/main/fonts/Uzi-stylish.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "Uzicute";
+    src: url("https://raw.githubusercontent.com/vickkie/uzitrake/main/fonts/Uzicute.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+
 body {
     margin: 0px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Uzi', sans-serif;
     /* background-image: url('../assets/images/gradientbg.jpg'); */
     /* background-size: cover; */
 }
@@ -25,9 +39,9 @@ body {
     top: 1rem;
     left: 50%;
     transform: translateX(-50%);
+    font-family: 'Uzi', sans-serif;
     z-index: 1000;
     border-radius: 200px;
-    background-color: #d7d7d7aa;
     backdrop-filter: blur(5px);
     box-shadow: 0px 0px 20px rgba(167, 161, 161, 0.2);
     display: flex;
@@ -48,7 +62,7 @@ body {
             color: unset;
 
             &:hover {
-                background-color: #eee;
+                background-color: #7e7e7e;
             }
         }
     }
@@ -58,7 +72,7 @@ body {
     width: 100%;
     display: contents;
     transition: all 1s;
-
+    font-family: 'Uzicute', sans-serif;
     img {
         transition: all 1s;
         width: 50px;
@@ -69,6 +83,8 @@ body {
     width: 100%;
     top: 0rem;
     border-radius: 0px;
+    background-color: #d7d7d7aa;
+    color: black;
 }
 
 /* .rest-card {
@@ -81,7 +97,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: #d7d7d7aa;
+    /* background-color: #d7d7d7aa; */
     backdrop-filter: blur(5px);
 
     .rest-card-container {
@@ -90,15 +106,22 @@ body {
 }
 
 .search {
-    width: 20%;
+    width: 50%;
+    display: flex;
     input {
-        width: 100%;
+        width: 30%;
         height: 50px;
         border-radius: 10px;
         border: none;
-        margin-top: 20px;
-        margin-left: 15px;
+        margin: 10px;
         text-align: center;
+    }
+    .filter {
+        margin: 10px;
+        width: 40%;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
     }
 }
 
@@ -132,14 +155,15 @@ body {
     background-size: cover;
     border: 0px solid rgba(0, 0, 0, 0.25);
     border-top: 0px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 10px -2px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 8px 10px -2px rgba(0, 0, 0, 0.5); */
+    box-shadow: 0px 0px 20px rgba(167, 161, 161, 0.2);
     transition: all ease 0.28s 0.01s;
     transform: perspective(222px) translate3d(0px, 5px, 0px) rotateX(0deg);
     perspective-origin: top;
     position: relative;
     z-index: 1;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 10px;
     height: 300px;
 
     &::before {

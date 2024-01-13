@@ -1,8 +1,9 @@
-import { HEADER_LOGO } from '../utils/constants';
+// import { HEADER_LOGO } from '../utils/constants';
 const Logo = () => {
     return (
         <div className='logo'>
-            <img src={HEADER_LOGO} alt='CraveIt' />
+            {/* <img src={HEADER_LOGO} alt='CraveIt' /> */}
+            <h2>{'Crave It'}</h2>
         </div>
     );
 }
