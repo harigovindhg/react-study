@@ -1,6 +1,7 @@
 import Card from './Card';
 import Shimmer from './Shimmer';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Body = () => {
     const [restaurantListLocal, setRestaurantListLocal] = useState([]);       // Local State Variable
@@ -18,12 +19,11 @@ const Body = () => {
 
     const fetchData = async () => {
         try {
-            const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0529437&lng=77.6315163&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+            const data = await fetch("https://corsproxy.org/?https%3A%2F%2Fwww.swiggy.com%2Fdapi%2Frestaurants%2Flist%2Fv5%3Flat%3D13.0529437%26lng%3D77.6315163%26is-seo-homepage-enabled%3Dtrue%26page_type%3DDESKTOP_WEB_LISTING");
             const json = await data.json();
             setRestaurantListLocal(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);     // Optional Chaining for nullish checks
             setSearchResults(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);     // Optional Chaining for nullish checks
             setDataLoaded(true);
-            console.log(json);
         } catch (error) {
             console.log('data fetch failed');
         }
@@ -31,7 +31,7 @@ const Body = () => {
 
     const getTopRatedRest = () => {
         const topRatedRest = restaurantListLocal.filter(restaurant => restaurant.info.avgRating > 4);
-        setRestaurantListLocal(topRatedRest);
+        setSearchResults(topRatedRest);
     };
     const fetchSearchedRest = () => {
         let fetchedRestaurant = restaurantListLocal;
@@ -56,7 +56,7 @@ const Body = () => {
                 {!dataLoaded || restaurantListLocal.length === 0 ?
                     <Shimmer />
                     : searchResults.map((item) => (
-                        <Card {...item} key={item.info.id} id={`userCard_${item.info.id}`} />
+                        <Link className='card-wrapper' to={`/restaurants/${item.info.id}`} key={item.info.id}><Card {...item} id={`userCard_${item.info.id}`} /></Link>
                     ))
                 }
             </div>

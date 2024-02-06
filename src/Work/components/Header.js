@@ -1,22 +1,11 @@
 // import { HEADER_LOGO } from '../utils/constants';
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 const Logo = () => {
     return (
         <div className='logo'>
             {/* <img src={HEADER_LOGO} alt='CraveIt' /> */}
             <h2>{'Crave It'}</h2>
-        </div>
-    );
-}
-
-const NavItem = () => {
-    return (
-        <div className="navItem">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Profile</a>
-            <a href="#">Cart</a>
-            <a className="login-button">Login</a>
         </div>
     );
 }
@@ -31,12 +20,13 @@ const Header = () => {
             <div className='logo'>
                 <h2>{'Crave It'}</h2>
             </div>
+            {/* Never use a href in React, instead, use a Link Tag */}
             <div className="navItem">
-                <a href="#">Home</a>
-                <a href="#">About Us</a>
-                <a href="#">Profile</a>
-                <a href="#">Cart</a>
-                <a className="login-button" onClick={loginUser}>{buttonName}</a>
+                <Link to="/">Home</Link>
+                <Link to="about">About Us</Link>
+                <Link to="profile">Profile</Link>
+                <Link to="cart">Cart</Link>
+                <Link className="login-button" onClick={loginUser}>{buttonName}</Link>
             </div>
         </header>
     );

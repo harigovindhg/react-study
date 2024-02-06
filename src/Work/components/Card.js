@@ -1,8 +1,9 @@
 import { CDN_URL } from '../utils/constants';
+
 const Card = (props) => {
     const { id, cloudinaryImageId, name, avgRating, sla, cuisines, costForTwo } = props?.info;    // optional chaining - defaults to undefined when the data is nullish: i.e, undefined or null
     return (
-        <div className='rest-card' id={`cardcontainer_${id}`}>
+        <div className='rest-card' id={`cardcontainer_${id}`} >
             <div className='card-content' key={id} style={{ backgroundImage: `url(${CDN_URL}${cloudinaryImageId})` }}>
                 <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_${id}`} >
                     <div className='rest-name'>

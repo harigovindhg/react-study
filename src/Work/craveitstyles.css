@@ -47,13 +47,17 @@ body {
     z-index: 1000;
     border-radius: 50px;
     backdrop-filter: blur(5px);
-    box-shadow: 0px 0px 20px rgba(167, 161, 161, 0.2);
+    /* box-shadow: 0px 0px 20px rgba(167, 161, 161, 0.2); */
     /* box-shadow: 0 15px 40px -20px rgba(40,44,63,.15); */
     display: flex;
     width: 50%;
     height: 75px;
     justify-content: space-evenly;
     transition: all 0.5s;
+
+    &:hover {
+        box-shadow: 0px 0px 20px rgba(167, 161, 161, 0.2);
+    }
 
     .navItem {
         transition: opacity 1s;
@@ -115,16 +119,24 @@ body {
     /* background-color: #d7d7d7aa; */
     backdrop-filter: blur(5px);
 
+    .card-wrapper {
+        width: 16.666%;
+    }
+
     .rest-card-container {
         display: flex;
+        width: 90%;
+        margin-left: 5%;
     }
 }
 
 .search {
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
     display: flex;
     justify-content: space-between;
     transition: all 0.5s;
+
     input {
         width: 30%;
         height: 50px;
@@ -142,7 +154,8 @@ body {
         width: 15%;
         margin: 10px;
         border: 0.5px dashed black;
-        &:hover{
+
+        &:hover {
             border: 1px solid black;
             background: #cccccc;
         }
@@ -321,4 +334,214 @@ body {
 .login-button {
     background-image: url('https://www.flaticon.com/free-icon/login_95461?term=login&page=1&position=25&origin=tag&related_id=95461');
     cursor: pointer;
+}
+
+.route-error {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+
+    hr {
+        width: 100%;
+    }
+}
+
+.restaurant-data-main {
+    margin: 0% 5%;
+    padding: 1%;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+
+    .restaurant-primary-data {
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .rest-core-image {
+            width: 10%;
+
+            &.skeleton {
+                height: 175px;
+            }
+
+            img {
+                border-radius: 10px;
+                width: 100%;
+            }
+        }
+
+        .restaurant-name-and-details {
+            margin-left: 10px;
+            width: 80%;
+
+            h2 {
+                &.skeleton {
+                    width: 200px;
+                    height: 30px;
+                }
+            }
+
+            .rest-rating.skeleton {
+                width: 250px;
+                height: 20px;
+            }
+        }
+    }
+
+    .sub-type {
+        h2.skeleton {
+            width: 300px;
+            height: 30px;
+        }
+
+        .food-details {
+            display: flex;
+            justify-content: space-between;
+            background: #d3d3d3;
+            border-radius: 10px;
+            padding: 20px;
+
+            .food-details-core {
+                h4.skeleton {
+                    width: 300px;
+                    height: 20px;
+                }
+            }
+
+            .food-details-image {
+                align-content: center;
+                display: flex;
+                flex-wrap: wrap;
+
+                img {
+                    width: 180px;
+                    height: 146px;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+            }
+
+            .icon-veg {
+                width: 1.5rem;
+                height: 1.5rem;
+                content: url('https://img.icons8.com/color/48/vegetarian-food-symbol.png');
+            }
+
+            .icon-non-veg {
+                width: 1.5rem;
+                height: 1.5rem;
+                content: url('https://img.icons8.com/color/48/non-vegetarian-food-symbol.png');
+            }
+
+            .food-description {
+                color: #6C6C6C;
+
+                &.skeleton {
+                    width: 300px;
+                    height: 10px;
+                }
+
+                &.green {
+                    color: #007504
+                }
+
+                &.yellow {
+                    color: #c3b600
+                }
+
+                &.red {
+                    color: #ff882d
+                }
+            }
+        }
+    }
+}
+
+.veg-only-filter {
+    display: flex;
+    align-items: center;
+
+    h3.skeleton {
+        width: 5%;
+    }
+
+    h3 {
+        margin-right: 10px;
+        padding: 10px 10px 10px 0px;
+
+        &.vegetarian {
+            border: 2px solid #0b6a00;
+            border-radius: 50px;
+            border-left: none;
+            border-bottom-style: hidden;
+            border-top-style: hidden;
+            background: linear-gradient(90deg, rgba(2, 0, 36, 0) 40%, rgba(18, 171, 0, 1) 100%);
+        }
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 30px;
+        width: 30px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked+.slider {
+        background-color: #15a01e;
+    }
+
+    input:focus+.slider {
+        box-shadow: 0 0 1px #15a01e;
+    }
+
+    input:checked+.slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 7px;
+    }
+
+    .slider.round:before {
+        border-radius: 5px;
+    }
 }
