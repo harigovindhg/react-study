@@ -122,7 +122,7 @@ useEffect syntax follows the below logic:
 		  1. If dependency is not provided to the useEffect hook, it will be triggered every instance the component renders. 
 		  2. If dependency is empty array, then useEffect hook is only triggered on initial render.
 		  3. If dependency is provided, then useEffect is triggered every time the dependency value changes
-	  
+	- If you want to trigger any function/cleanup task once the component unmounts, use a return function within the useEffect itself
 
 #### Normal and State Variables
 
@@ -273,10 +273,77 @@ Class Components are invoked every single instance that the component is invoked
 Whenever a class Component is loaded, the constructor of that class component is the first thing that is triggered
 Then render is triggered.
 
+React rendering of components works in 3 stages,
+	Mounting
+	Updating
+	Unmounting
 #### Lifecycle Hooks 
 Class Components also have multiple Lifecycle Hooks, including:
 	**componentDidMount**: This is called once the render of the current component is completed.
 	component. The main purpose is to make API calls, since the page has rendered, and now APIs can be called to fetch the data. This also helps with `lazy loading` of pages.
 		Note: **componentDidMount** is an asynchronous call, which means that it will go to the `commit` phase, which is the 2nd stage of the React Lifecycle
-	
-	
+
+
+The Usual Lifecycle Methods can be seen here:
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
+NEVER COMPARE CLASS COMPONENT LIFECYCLE METHODS TO FUNCTIONAL COMPONENT USEEFFECT
+
+### Optimizing a Web App
+
+#### Single Responsibility Principle
+
+Always make sure that each component that you create handles only a single task, i.e:  has a **single responsibility**
+
+This also utilizes modularity of components, and helps with testing and issue detection
+
+#### Custom Hooks
+We can create custom hooks to abstract certain functions which might be used on more than one component, and may/may not be too large to be in a single component.
+
+#### 'Chunking' aka 'Code Splitting' aka 'Dynamic Bundling' aka 'Lazy Loading' aka 'On-Demand Loading' aka 'Dynamic Import'
+
+Refers to breaking down an App into smaller chunks, bundling the code in smaller chunks.
+
+When the webpage loads initially, we dont want the codebase of the entire website to be loaded in immediately, since it can lead to JS files of massive sizes (even if they are minified!).
+
+To make it so that only the necessary components are loaded, we will utilize `Lazy Loading`
+
+Syntax: 
+```
+const Container = lazy(() => import(<component_path>));
+```
+
+But just using the above syntax is not enough.
+
+We will run into the issue of synchronous inputs if we stop at this step. The issue is that when we click/ trigger the component render, React will fetch the lazy loaded codebase of the component into the code.
+But this takes time (miniscule, but still not instantaneous). Which means that this fetching is asynchronous.
+Our click, redirection, and render calls however, is synchronous, which will cause React to suspend the render, and throw an error, since the codebase for the component wasn't fetched synchronously.
+
+##### Suspense
+To fix the synchronous render call for asynchronously fetched codebase, we have to use `Suspense` component.
+We will use this component as a wrapper on top of the component we are lazy loading.
+
+Syntax:
+```
+import { lazy, Suspense } from 'react';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+
+
+const LazyLoadingComponent = lazy(() => import('./LazyLoadingComponent_path'));
+
+const appRoutes = createBrowserRouter({
+{
+	path: '/',
+	element: <Application />
+	children: [
+		{
+			path: '/lazyloadpath',
+			element: <Suspense fallback={<LoaderJSXComponent />}><LazyLoadingComponent></ Suspense>
+		}
+	]
+}
+})
+
+```
+
+The `fallback` property is to tell React to render the JSX passed to `fallback` till lazy loading is completed

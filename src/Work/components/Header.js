@@ -1,6 +1,7 @@
 // import { HEADER_LOGO } from '../utils/constants';
 import { useState } from "react";
 import { Link } from 'react-router-dom';
+import useOnlineStatus from "../utils/useOnlineStatus";
 const Logo = () => {
     return (
         <div className='logo'>
@@ -15,8 +16,9 @@ const Header = () => {
     const loginUser = () => {
         buttonName === 'Login' ? setButtonName('Logout') : setButtonName('Login')
     }
+    const onlineStatus = useOnlineStatus();
     return (
-        <header id="header" className='header'>
+        <header id="header" className={`header ${onlineStatus ? 'online' : 'offline'}`}>
             <div className='logo'>
                 <h2>{'Crave It'}</h2>
             </div>
@@ -26,8 +28,10 @@ const Header = () => {
                 <Link to="about">About Us</Link>
                 <Link to="profile">Profile</Link>
                 <Link to="cart">Cart</Link>
+                <Link to="grocery">{'Grocery (NEW!)'}</Link>
                 <Link className="login-button" onClick={loginUser}>{buttonName}</Link>
             </div>
+            <h4>{`Online Status: ${onlineStatus ? '✅' : '🔴'}`}</h4>
         </header>
     );
 }

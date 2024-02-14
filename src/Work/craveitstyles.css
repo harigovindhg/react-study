@@ -78,6 +78,14 @@ body {
     }
 }
 
+.offline {
+    box-shadow: 0 0 20px #ff0101e0 !important;
+
+    &:hover {
+        box-shadow: 0 0 40px #ff0101e0 !important;
+    }
+}
+
 .logo {
     width: 100%;
     display: contents;

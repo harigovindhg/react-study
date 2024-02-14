@@ -28,13 +28,17 @@ class About extends Component {
             <>
                 {/* <Header /> */}
                 <div className='body'>
-                    <h1>About</h1>
-                    <User />
-                    <UserClass name={"Hari"} location={'India'} gitLink={'harigovindhg'} />
-                    <UserClass name={"Mark"} location={'US'} gitLink={'akshaymarch7'} />
-                    <UserClass name={"Robert"} location={'UK'} gitLink={'harigovindhg'} />
-                    <p>{`Count: ${count}`}</p>
-                    <button onClick={(event) => this.incrementCounter(event)}>Click Me</button>
+                    <div className="restaurant-data">
+                        <div className="restaurant-primary-data">
+                            <h1>About</h1>
+                            <div className='rest-card-container'>
+                                <UserClass name={"First"} gitLink={'harigovindhg'} />
+                                {/* <UserClass name={"Second"} gitLink={'akshaymarch7'} /> */}
+                            </div>
+                            {/* <p>{`Count: ${count}`}</p>
+                            <button onClick={(event) => this.incrementCounter(event)}>Click Me</button> */}
+                        </div>
+                    </div>
                 </div>
             </>
         )

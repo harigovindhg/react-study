@@ -1,14 +1,17 @@
 // Food Delivery portal
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDom from "react-dom/client";
 import { StrictMode } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Header from "../Work/components/Header.js";
-import Body from "../Work/components/Body.js";
-import About from "../Work/components/About.js";
-import Profile from "../Work/components/Profile.js";
-import Error from "../Work/components/Error.js";
+import Header from "./components/Header.js";
+import Body from "./components/Body.js";
+import About from "./components/About.js";
+import Profile from "./components/Profile.js";
+import Error from "./components/Error.js";
+// import Grocery from "./components/Grocery.js";
 import RestaurantDetails from "./components/RestaurantDetails.js";
+
+const Grocery = lazy(() => import('./components/Grocery.js'))   // Lazy Loading
 
 /**
  * - Header
@@ -63,6 +66,10 @@ const appRouter = createBrowserRouter([
                 element: <Profile />,
             },
             {
+                path: "/grocery",
+                element: <Suspense fallback={<h1>{'Loading page'}</h1>}><Grocery /></Suspense>,
+            },
+            {
                 path: "/restaurants/:restId",
                 element: <RestaurantDetails />,
             },
@@ -72,7 +79,7 @@ const appRouter = createBrowserRouter([
 ]);
 const root = ReactDom.createRoot(document.getElementById("root"));
 root.render(
-    <StrictMode>
-        <RouterProvider router={appRouter} />
-    </StrictMode>
+    // <StrictMode>
+    <RouterProvider router={appRouter} />
+    // </StrictMode>
 );

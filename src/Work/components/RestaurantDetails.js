@@ -1,28 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
-import { CDN_URL, LAT, LONG, FOOD_CDN_URL, REST_MENU_API } from "../utils/constants";
+import { CDN_URL, FOOD_CDN_URL } from "../utils/constants";
+import useRestaurantMenu from '../utils/useRestaurantMenu';
 
 const RestaurantDetails = () => {
-  const [restData, setRestData] = useState(null);
   const [filterVeg, setFilterVeg] = useState(false);
   const { restId } = useParams();
+  const restData = useRestaurantMenu(restId);
 
-  useEffect(() => {
-    fetchMenu();
-  }, []);
-
-  const fetchMenu = async () => {
-    try {
-      const data = await fetch(
-        `${REST_MENU_API}${restId}`
-      );
-      const json = await data.json();
-      setRestData(json);
-    } catch (error) {
-      console.log("restaurant details not available");
-    }
-  };
 
   const filterVegetarian = () => {
     setFilterVeg(!filterVeg);
@@ -96,7 +82,7 @@ const RestaurantDetails = () => {
 
   return (
     <div className="body restaurant-data-main">
-      {restData === null ? (
+      {restData === null || restData === undefined ? (
         <Shimmer isRestaurantShimmer={true} />
       ) : (
         renderRestaurantDetails()
