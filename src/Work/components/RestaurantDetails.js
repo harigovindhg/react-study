@@ -35,9 +35,9 @@ const RestaurantDetails = () => {
         <hr style={{ borderTopStyle: 'dashed' }} />
         <div className="veg-only-filter flex items-center">
           <h3 className={`${veg ? 'vegetarian rounded-full border-vegBorder  border-x-0 border-l-0 border-r-2 bg-vegBg' : ''} mr-3 py-3 pr-3 pl-0`}>{veg ? 'Pure Veg 🌿' : 'Veg Only'}</h3>
-          {!veg ? <label className="switch" >
-            <input type="checkbox" checked={filterVeg} onChange={() => filterVegetarian()} />
-            <span className="slider round"></span>
+          {!veg ? <label className="switch relative inline-block w-16 h-9" >
+            <input className="opacity-0 w-0 h-0" type="checkbox" checked={filterVeg} onChange={() => filterVegetarian()} />
+            <span className="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-[#ccc] duration-[0.4s] before:absolute before:content-[''] before:h-8 before:w-8 before:left-[2px] before:bottom-[2px] before:bg-white before:duration-[0.4s] rounded-lg before:rounded-md "></span>
           </label> : ''}
         </div>
         {itemList?.map((item, index) => {
