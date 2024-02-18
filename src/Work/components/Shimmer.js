@@ -4,8 +4,8 @@ const Shimmer = (props) => {
   const restaurantListSkeleton = () => {
     return (
       restaurantList.map((item, index) => (
-        <div className="rest-card" key={`shimmer_cardItem_${index}_${item.id}`}>
-          <div className="card-content skeleton">
+        <div className="rest-card max-w-full min-w-[150px] flex-[0_1_16.66%] m-0 p-4" key={`shimmer_cardItem_${index}_${item.id}`}>
+          <div className="card-content skeleton p-0 bg-cover bg-no-repeat bg-transparent h-80 rounded-xl transition-all ease-in-out relative overflow-hidden before:absolute before:w-full before:h-full before:bg-glimmer before:top-0 before:left-0 before:content-[''] before:transition-all before:ease-in-out after:w-full after:h-full after:absolute after:top-28 after:left-0 after:bg-cardshadow after:content-['']">
             <div className="rest-details">
               <div className="rest-name skeleton"></div>
               <div className="rest-subdetails skeleton-parent">
@@ -15,7 +15,7 @@ const Shimmer = (props) => {
               </div>
             </div>
           </div>
-        </div>
+        </div >
       ))
     );
   }

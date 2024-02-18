@@ -44,23 +44,23 @@ const Body = () => {
         setSearchResults(fetchedRestaurant);
     }
     return (
-        <div className="body">
+        <div className="body relative h-full flex flex-col backdrop-blur-[5px] top-28">
             {onlineStatus ? <>
-                <div className='search'>
-                    <div className='search-inner'>
-                        <input type='text' placeholder='Search for your favourite dishes' value={searchText} onChange={(e) => {
+                <div className='search w-[90%] flex justify-between transition-all duration-[0.5s] ml-[5%]'>
+                    <div className='search-inner flex w-1/2'>
+                        <input type='text' className='w-[30%] h-[50px] text-center m-2.5 rounded-[10px] border-[none] bg-offWhite' placeholder='Search for your favourite dishes' value={searchText} onChange={(e) => {
                             setSearchText(e.target.value);
                         }} />
-                        <button className='filter' id='filter-btn' onClick={fetchSearchedRest}>{'Search'}</button>
+                        <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={fetchSearchedRest}>{'Search'}</button>
                     </div>
-                    <button className='filter' id='filter-btn' onClick={getTopRatedRest} >{'Top Rated'}</button>
+                    <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={getTopRatedRest} >{'Top Rated'}</button>
                 </div>
-                <div className='rest-card-container'>
+                <div className='rest-card-container w-[90%] ml-[5%] mr-[5%] flex justify-start items-start flex-wrap flex-row'>
                     {/* {!dataLoaded || restaurantListLocal.length === 0 ? */}
                     {!dataLoaded || restaurantListLocal?.length === 0 ?
                         <Shimmer />
                         : searchResults?.map((item) => (
-                            <Link className='card-wrapper' to={`/restaurants/${item.info.id}`} key={item.info.id}><Card {...item} id={`userCard_${item.info.id}`} /></Link>
+                            <Link className='card-wrapper w-1/6' to={`/restaurants/${item.info.id}`} key={item.info.id}><Card {...item} id={`userCard_${item.info.id}`} /></Link>
                         ))
                     }
                 </div>

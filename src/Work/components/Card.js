@@ -3,14 +3,14 @@ import { CDN_URL } from '../utils/constants';
 const Card = (props) => {
     const { id, cloudinaryImageId, name, avgRating, sla, cuisines, costForTwo } = props?.info;    // optional chaining - defaults to undefined when the data is nullish: i.e, undefined or null
     return (
-        <div className='rest-card' id={`cardcontainer_${id}`} >
-            <div className='card-content' key={id} style={{ backgroundImage: `url(${CDN_URL}${cloudinaryImageId})` }}>
-                <div className='rest-details' id={`cardcontainerdetails_${id}`} key={`card_${id}`} >
+        <div className='rest-card max-w-full min-w-[150px] flex-[0_1_16.66%] m-0 p-4' id={`cardcontainer_${id}`} >
+            <div className='card-content p-0 bg-cover bg-no-repeat bg-transparent h-80 rounded-xl transition-all ease-in-out relative overflow-hidden before:absolute before:w-full before:h-full before:bg-glimmer before:top-0 before:left-0 before:content-[""] before:transition-all before:ease-in-out after:w-full after:h-full after:absolute after:top-28 after:left-0 after:bg-cardshadow after:content-[""]' key={id} style={{ backgroundImage: `url(${CDN_URL}${cloudinaryImageId})` }}>
+                <div className='rest-details py-0 px-3 pb-px text-[#f8eeee] absolute z-10 w-full bottom-0 left-0' id={`cardcontainerdetails_${id}`} key={`card_${id}`} >
                     <div className='rest-name'>
                         <h3>{name}</h3>
                     </div>
                     <div className='rest-subdetails'>
-                        <div style={{ display: 'flex' }}>
+                        <div style={{ display: 'flex' }} className='my-1'>
                             {`${avgRating}`}
                             <div style={{ margin: '0px 5px 0px 5px' }}>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" role="img" aria-hidden="true" strokecolor="rgba(2, 6, 12, 0.92)" fillcolor="rgba(2, 6, 12, 0.92)">
