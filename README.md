@@ -347,3 +347,99 @@ const appRoutes = createBrowserRouter({
 ```
 
 The `fallback` property is to tell React to render the JSX passed to `fallback` till lazy loading is completed
+
+### Higher Order Components
+
+A Higher Order Component is a component that takes a component as an input, and returns another component.
+
+A Higher Order Component will always be a pure function, meaning: it will never modify the component itself, only enhance by adding to it
+
+### Lifting of States
+
+Lifting of states refer to moving state variables from a child component to a parent component. This is usually done to make uncontrolled child components into controlled child components
+
+Read More: https://react.dev/learn/sharing-state-between-components#lifting-state-up-by-example
+### Controlled Components and Uncontrolled Components
+
+ A Controlled Component is a component which is controlled by its parent component.
+ An Uncontrolled Component is a component which is not controlled by its parent.
+
+E.g.: A Component which has a property to show/hide some of its contents, but the control for that feature is provided from its own parent component - This is a Controlled Component.
+
+### Prop Drilling
+
+Prop Drilling refers to passing props from a parent to a child component, and to its child component, which is used within that innerchild component.
+
+This is something that should be avoided, as this can become overly verbose, and extremely inconvenient, as it can span multiple layers deep.
+
+To avoid excessive prop drilling, we can use **useContext** hook to maintain a global level database of all the props required.
+
+Read More: https://react.dev/learn/passing-data-deeply-with-context#the-problem-with-passing-props
+
+### useContext
+
+useContext is a react hook used to create `contexts` which contains data that can be accessed anywhere in the app.
+Popular use cases for such a context is Login state, to track the login state, and login user data.
+
+We can create a context using `createContext` , which is a named export from `react`
+
+Syntax:
+```
+import { createContext } from 'react';
+
+const UserContext = createContext({
+	loggedInUser: 'initData'
+});
+
+export default UserContext;
+```
+
+#### Consumers
+
+We can then access this created context in any component that we need using the `useContext` react hook.
+
+Syntax:
+```
+import {useContext} from 'react';
+import UserContext from '../utils/UserContext'
+
+const data = useContext(UserContext);
+
+console.log(data.loggedInUser);
+```
+
+**Note**: Hooks are not available in class Based components.
+		We will use `<UserContext.Consumer>` component, which is provided by `createContext`.
+		We have to write a callback function within this tags to get access to the data within `UserContext` context
+	Syntax:
+```
+		<UserContext.Consumer>
+			{(data) => {<h1>{data.loggedInUser}</h1>}}
+		</ UserContext.Consumer>
+```
+
+`useContext` and `<ContextValue.Consumer>` are 2 methods by which contexts can be consumed.
+
+#### Providers
+
+We also will need to update the context values at some point ( In the case of a login page, once the user successfully logs in, we will have to update the context ).
+
+We can wrap the component where we want the updated data to be present, in a `UserContext.Provider` tag.
+
+We can also pass the set functions of the `useState` to the Provider to be made available throughout the wrapped child component.
+
+Syntax:
+```
+import UserContext from '../utils/UserContext'
+const [loginUserName, setLoginUserName] = useState('Hari Govind');
+return (
+	<UserContext.Provider value={{loggedInUser: loginUserName, setLoginUserName}}>
+		<App>
+	</UserContext>
+);
+```
+
+**We can set contexts to the whole App, a section of the App**
+**We can create multiple contexts, override anywhere we want, and only for specific sections**
+
+`UserContext.Providers` can be nested, and is perfectly fine.

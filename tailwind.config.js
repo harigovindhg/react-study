@@ -39,6 +39,9 @@ module.exports = {
       },
       keyframes: {
         shine: { to: { 'background-position': 'right -40px top 0' } }
+      },
+      transitionProperty: {
+        accordion: 'max-height'
       }
     },
   },

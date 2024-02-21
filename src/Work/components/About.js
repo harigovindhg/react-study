@@ -1,3 +1,4 @@
+import UserContext from '../utils/UserContext';
 import User from './User';
 import UserClass from './UserClass';
 import { Component } from 'react';
@@ -27,11 +28,14 @@ class About extends Component {
         return (
             <>
                 {/* <Header /> */}
-                <div className='body'>
+                <div className='body relative h-full flex flex-col backdrop-blur-[5px] top-28'>
                     <div className="restaurant-data">
-                        <div className="restaurant-primary-data">
+                        <div className="restaurant-primary-data bg-no-repeat bg-contain flex items-center flex-wrap">
                             <h1>About</h1>
-                            <div className='rest-card-container'>
+                            <div className='rest-card-container w-[90%] ml-[5%] mr-[5%] flex justify-start items-start flex-wrap flex-row'>
+                                <UserContext.Consumer>
+                                    {(data) => { return <h1>{data.loggedInUser}</h1> }}
+                                </UserContext.Consumer>
                                 <UserClass name={"First"} gitLink={'harigovindhg'} />
                                 {/* <UserClass name={"Second"} gitLink={'akshaymarch7'} /> */}
                             </div>

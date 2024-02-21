@@ -1,7 +1,7 @@
 // Food Delivery portal
 import React, { lazy, Suspense } from "react";
 import ReactDom from "react-dom/client";
-import { StrictMode } from "react";
+import { StrictMode, useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Header from "./components/Header.js";
 import Body from "./components/Body.js";
@@ -10,6 +10,8 @@ import Profile from "./components/Profile.js";
 import Error from "./components/Error.js";
 // import Grocery from "./components/Grocery.js";
 import RestaurantDetails from "./components/RestaurantDetails.js";
+import UserContext from "./utils/UserContext.js";
+import User from "./components/User.js";
 
 const Grocery = lazy(() => import('./components/Grocery.js'))   // Lazy Loading
 
@@ -51,11 +53,27 @@ function resizeHeaderOnScroll() {
 window.addEventListener("scroll", resizeHeaderOnScroll);
 
 const AppContainer = () => {
+    const [userName, setUserName] = useState();
+    useEffect(() => {
+        // Call API for Auth based on UN and PW
+        const data = {
+            name: 'Hari Govind'
+        };
+        setUserName(data.name);
+    }, []);
+
     return (
-        <div className="App">
-            <Header />
-            <Outlet />
-        </div>
+        // loggedInUser = Default User
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+            {/* loggedInUser = Hari Govind */}
+            <div className="App">
+                {/* <UserContext.Provider value={{ loggedInUser: 'Elon' }}> */}
+                {/* loggedInUser = Elon */}
+                <Header />
+                {/* </UserContext.Provider> */}
+                <Outlet />
+            </div>
+        </UserContext.Provider>
     );
 };
 const appRouter = createBrowserRouter([

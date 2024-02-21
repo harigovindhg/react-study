@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
-import { CDN_URL, FOOD_CDN_URL } from "../utils/constants";
+import { CDN_URL } from "../utils/constants";
 import useRestaurantMenu from '../utils/useRestaurantMenu';
+import RestaurantItemAccordion from "./RestaurantItemAccordion";
 
 const RestaurantDetails = () => {
   const [filterVeg, setFilterVeg] = useState(false);
+  const [showIndex, setShowIndex] = useState(null);
   const { restId } = useParams();
   const restData = useRestaurantMenu(restId);
 
@@ -14,14 +16,31 @@ const RestaurantDetails = () => {
     setFilterVeg(!filterVeg);
   }
 
-  renderRestaurantDetails = () => {
-    const { name, avgRating, costForTwoMessage, totalRatingsString, sla, feeDetails, veg } = restData?.data?.cards[0]?.card?.card?.info;
-    const itemList = restData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+  const handleAccordionCollapse = (index) => {
+    if (index === showIndex) {
+      setShowIndex(null);
+    } else {
+      setShowIndex(index);
+    }
+  }
+
+  const renderRestaurantDetails = () => {
+    const restMainData = restData?.data?.cards?.filter((rest) => {
+      return rest?.card?.card?.['@type'] === "type.googleapis.com/swiggy.presentation.food.v2.Restaurant";
+    });
+    const restaurantMenuList = restData?.data?.cards?.filter((rest) => {
+      return rest?.groupedCard !== undefined && rest?.groupedCard !== null;
+    });
+    const { name, avgRating, costForTwoMessage, totalRatingsString, sla, feeDetails, veg, cloudinaryImageId } = restMainData[0]?.card?.card?.info;
+    const itemList = restaurantMenuList[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+    const restaurantData = itemList?.filter(item => {
+      return item?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory'
+    })
     return (
       <div className="restaurant-data">
         <div className="restaurant-primary-data bg-no-repeat bg-contain flex items-center flex-wrap ">
-          <div className="rest-core-image w-[10%] ">
-            <img className="rounded-xl w-full" src={`${CDN_URL}${restData?.data?.cards[0]?.card?.card?.info?.cloudinaryImageId}`} alt={`${name} Image`} />
+          <div className="rest-core-image w-[15%] ">
+            <img className="rounded-xl w-full" src={`${CDN_URL}${cloudinaryImageId}`} alt={`${name} Image`} />
           </div>
           <div className="restaurant-name-and-details ml-[10px] w-4/5">
             <h2>{name}</h2>
@@ -40,48 +59,15 @@ const RestaurantDetails = () => {
             <span className="slider absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-[#ccc] duration-[0.4s] before:absolute before:content-[''] before:h-8 before:w-8 before:left-[2px] before:bottom-[2px] before:bg-white before:duration-[0.4s] rounded-lg before:rounded-md "></span>
           </label> : ''}
         </div>
-        {itemList?.map((item, index) => {
-          if (index != 0) {
-            const { title, type, itemCards } = item?.card?.card;
-            let filteredItems = itemCards;
-            if (filterVeg) {
-              filteredItems = filteredItems?.filter(item => {
-                return item?.card?.info?.isVeg === 1;
-              })
-            }
-            return (
-              <div className="sub-type" key={`${title}_${type}`}>
-                {title !== undefined && filteredItems?.length > 0 ? <><h2>{`${title} (${filteredItems?.length})`}</h2>
-                  {filteredItems?.map((subCatItem) => {
-                    const { id, name, imageId, description, price, ratings, isVeg, defaultPrice } = subCatItem?.card?.info;
-                    return (
-                      <div className="food-details-wrapper" key={id} >
-                        <div className="food-details flex justify-between bg-offWhiteDarker rounded-xl p-5">
-                          <div className="food-details-core">
-                            <div className={isVeg === 1 ? 'icon-veg w-6 h-6 content-veg' : 'icon-non-veg w-6 h-6 content-nonVeg'} />
-                            <h4>{name}</h4>
-                            <p className="food-description text-darkerGray">{description}</p>
-                            {ratings?.aggregatedRating?.rating !== undefined ? <p className={`food-description ${ratings?.aggregatedRating?.rating >= 4 ? 'green text-ratingGreen' : ratings?.aggregatedRating?.rating >= 3 ? 'yellow text-ratingYellow' : ratings?.aggregatedRating?.rating < 3 ? 'red text-ratingOrange' : ''}`}>{`${ratings?.aggregatedRating?.rating}⭐  (${ratings?.aggregatedRating?.ratingCount})`}</p> : ''}
-                            <p className="food-price">{`₹ ${price !== undefined ? price / 100 : defaultPrice / 100}`}</p>
-                          </div>
-                          {imageId !== undefined ? <div className="food-details-image content-center flex flex-wrap">
-                            <img className="w-44 h-36 object-cover rounded-xl" src={`${FOOD_CDN_URL}${imageId}`} alt={`${name} image`} />
-                          </div> : ''}
-                        </div>
-                        <hr />
-                      </div>
-                    )
-                  })}</> : ''}
-              </div>
-            );
-          }
+        {restaurantData?.map((item, index) => {
+          return <RestaurantItemAccordion key={`${item?.card?.card?.title}_${item?.card?.card?.type}`} {...item} isVegFilter={filterVeg} showItems={index === showIndex && true} handleAccordionCollapse={() => handleAccordionCollapse(index)} />
         })}
       </div>
     )
   }
 
   return (
-    <div className="body restaurant-data-main mx-[5%] my-0 p-[1%] bg-offWhite rounded-xl relative h-full flex flex-col backdrop-blur-[5px] top-28">
+    <div className="body restaurant-data-main mx-[12%] my-0 p-[1%] bg-offWhite rounded-xl relative h-full flex flex-col backdrop-blur-[5px] top-28">
       {restData === null || restData === undefined ? (
         <Shimmer isRestaurantShimmer={true} />
       ) : (

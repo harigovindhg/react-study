@@ -37,4 +37,17 @@ const Card = (props) => {
     )
 }
 
+// Higher Order Component
+
+export const withOpenLabel = (Card) => {
+    return (props) => {
+        return (
+            <>
+                <label className='absolute z-10 bg-ratingGreen rounded-xl p-2 text-white'>Open</label>
+                <Card {...props} />
+            </>
+        )
+    }
+}
+
 export default Card;

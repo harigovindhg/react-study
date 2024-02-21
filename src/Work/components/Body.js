@@ -1,20 +1,25 @@
-import Card from './Card';
+import Card, { withOpenLabel } from './Card';
 import Shimmer from './Shimmer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useRestaurantList from '../utils/useRestaurantList';
 import useOnlineStatus from '../utils/useOnlineStatus';
+import UserContext from '../utils/UserContext';
 
 const Body = () => {
     const [restaurantListLocal, setRestaurantListLocal] = useState([]);       // Local State Variable
     const [searchResults, setSearchResults] = useState([]);
+    const [userNameInput, setUserNameInput] = useState('');
     const [dataLoaded, setDataLoaded] = useState(false);
     const [searchText, setSearchText] = useState('');
     let onlineStatus = true;
+    const { setUserName } = useContext(UserContext);
     onlineStatus = useOnlineStatus();
     // const arr = useEffect(restaurantList);
     // const restaurantListLocal = arr[0];          This is just another way we can write useState, since useState returns an array,
     // const setRestaurantListLocal = arr[1];       and we usually use array destructuring, but this is perfectly fine too.
+
+    const RestCardWithOpenLabel = withOpenLabel(Card);  // Calling and using a Higher Order Component
 
     useEffect(() => {
         fetchData();
@@ -43,6 +48,9 @@ const Body = () => {
         }
         setSearchResults(fetchedRestaurant);
     }
+    const setGlobalUserNameInput = () => {
+        setUserName(userNameInput);
+    }
     return (
         <div className="body relative h-full flex flex-col backdrop-blur-[5px] top-28">
             {onlineStatus ? <>
@@ -53,6 +61,12 @@ const Body = () => {
                         }} />
                         <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={fetchSearchedRest}>{'Search'}</button>
                     </div>
+                    <div className='search-inner flex w-1/2'>
+                        <input type='text' className='w-[30%] h-[50px] text-center m-2.5 rounded-[10px] border-[none] bg-offWhite' placeholder='User Name' value={userNameInput} onChange={(e) => {
+                            setUserNameInput(e.target.value);
+                        }} />
+                        <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={setGlobalUserNameInput}>{'Set'}</button>
+                    </div>
                     <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={getTopRatedRest} >{'Top Rated'}</button>
                 </div>
                 <div className='rest-card-container w-[90%] ml-[5%] mr-[5%] flex justify-start items-start flex-wrap flex-row'>
@@ -60,7 +74,11 @@ const Body = () => {
                     {!dataLoaded || restaurantListLocal?.length === 0 ?
                         <Shimmer />
                         : searchResults?.map((item) => (
-                            <Link className='card-wrapper w-1/6' to={`/restaurants/${item.info.id}`} key={item.info.id}><Card {...item} id={`userCard_${item.info.id}`} /></Link>
+                            <Link className='card-wrapper w-1/6' to={`/restaurants/${item.info.id}`} key={item.info.id}>
+                                {/* If the restaurant is Open, then add an Open Label to it */}
+                                {item.info.isOpen ? <RestCardWithOpenLabel {...item} id={`userCard_${item.info.id}`}
+                                /> : <Card {...item} id={`userCard_${item.info.id}`} />}
+                            </Link>
                         ))
                     }
                 </div>

@@ -1,7 +1,8 @@
 // import { HEADER_LOGO } from '../utils/constants';
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 const Logo = () => {
     return (
         <div className='logo'>
@@ -17,6 +18,7 @@ const Header = () => {
         buttonName === 'Login' ? setButtonName('Logout') : setButtonName('Login')
     }
     const onlineStatus = useOnlineStatus();
+    const data = useContext(UserContext);
     return (
         <header id="header" className={`header ${onlineStatus ? 'online' : 'offline shadow-offline hover:shadow-offlineHover'} flex flex-row bg-offWhite/50 flex-wrap content-evenly items-center fixed top-4 left-1/2 -translate-x-1/2 z-10 backdrop-blur-sm rounded-full w-3/5 h-20 justify-evenly transition-all duration-splitsec`}>
             <div className='logo w-full contents transition-all duration-1000 font-uzicute '>
@@ -29,9 +31,10 @@ const Header = () => {
                 <Link to="profile" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Profile</Link>
                 <Link to="cart" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Cart</Link>
                 <Link to="grocery" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">{'Grocery (NEW!)'}</Link>
-                <Link className="login-button transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full" onClick={loginUser}>{buttonName}</Link>
+                <a className="login-button transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full" onClick={loginUser}>{buttonName}</a>
             </div>
-            <h4>{`Online Status: ${onlineStatus ? '✅' : '🔴'}`}</h4>
+            <h4>{`Online: ${onlineStatus ? '✅' : '🔴'}`}</h4>
+            {buttonName === 'Logout' && <h4>{`Welcome ${data?.loggedInUser}`}</h4>}
         </header>
     );
 }
