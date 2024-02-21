@@ -575,4 +575,4 @@ A `selector` will read the data from the slice of the Redux Store and return to 
 
 This process where we use a `selector` to keep our component in sync with slice in the Redux Store is called **Subscribing to the store.**
 
-![[Redux Architecture.png]]
+![Redux Architecture.png](/assets/images/Redux%20Architecture.png)
