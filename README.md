@@ -16,6 +16,100 @@ React.createElement("h1", { id: 'heading' }, 'Hello World From React');
 React by default is not production-ready
 We have to [[Ignite our React App]] 
 
+### Ignite our React App
+We can create our package.json, which is a configuration file for the node packages we will use in our React App.
+
+We initiate the configuration using the below command:
+```
+npm init
+```
+which generates the package.json file for us.
+
+The most important package for our React project is a 'bundler', like Parcel, Webpack, Wheat etc.
+Install Parcel with this command
+
+```
+npm install -D parcel
+```
+
+There are 2 types of depencies we can have for our app:
+	1. Dev Dependencies
+		 dependencies we use during development
+	2. Normal Dependencies
+		dependencies we will have in production
+
+**The `-D` we are using during npm install means that Parcel (any package that we are adding) will be added as a Dev dependency**
+
+**Note**: In the package.json we can see sometimes `^ (caret)` and `~ (tilde)` next to the version of the package.
+The difference between the 2 is that **`^` will automatically upgrade the package to the next available MINOR version, whereas `~` automatically upgrades the package to the next available MAJOR version**
+
+package.json will have only the version of the node module, with the `^` next to it.
+package-lock.json will have the exact version locked in for use in the project, and its details, including integrity hashes, sub-dependencies of the package we are using, etc.
+
+#### Transitive Dependencies
+A node module can have its own dependencies, and the sub dependencies can have its own dependencies, and so on and so forth. This tree of dependencies is called transitive dependencies.
+
+Node modules can get quite chunky (large in size), and we absolutely do not want it to go to production, or to the git. 
+To omit this file during our packaging, and pushing to github, we will create a `.gitignore` file.
+
+```
+.gitignore
+
+	/node_modules
+```
+
+#### Packaging our React App
+
+`npx parcel <core_fileName>` lets parcel to bundle our project, and runs it on the localhost for us
+
+`npx` means `node package execute`.
+
+`npx parcel core_fileName` executes parcel and asks parcel to use our `core_filename` file as the root file.
+
+Parcel packages our files in a production ready package, and hosts it on a local server, which basically makes our code production ready.
+
+##### Features of Parcel
+1. Creating Dev build of codebase
+2. Hosting to Local Server
+3. **HMR** - Hot Module Replacement - As soon as changes are made to the code, parcel repackages the code and reruns the server.
+4. Parcel achieves this using a File Watching Algorithm which is written in C++
+5. Caching
+6. Image Optimization
+7. Minification
+8. Compress
+9. Content Hashing - **need to study about this**
+10. Code Splitting - **need to study about this**
+11. Differential Bundling - Browser specific bundling, creates a nomodule when `<script type="module">` is given
+12. Diagnostics
+13. Error Handling and Error Suggestions
+14. HTTPS hosting
+15. Tree Shaking - removes unused code
+16. Transpiling
+
+##### Running parcel to create a production build
+
+`npx parcel build corefile_name`
+**Note:** remove App.js as the main file from package.json, to allow the build to be successful
+
+
+##### Browserslist
+
+This is a node module which the user can use to specify the browsers which can run our code/webpage.
+
+we will use it in our package.json
+
+Sample Syntax:
+```
+"browserslist": [
+"Last 2 Chrome versions",
+"Last 2 Firefox versions"
+]
+```
+
+This list specified means that our code will 100% work on the mentioned list, for rest of the browsers, there is no 100% guarantee from our end, that the webpage will load without any issues.
+
+### Installing React in our project.
+
 CDN links are usually not a good method to import react in our project.
 Always use npm to add React as a node module. This also ensures that we can keep it as a version controllable react package, and also a dependency in our project
 
@@ -35,7 +129,7 @@ JSX is not HTML, it is rather, a HTML-Like, or XML-Like syntax.
 JS Engine within browsers cannot parse JSX by default.
 JS Engine understands only ES (ECMAScript).
 
-**Parcel transpiles our JSX before it reaches the JS Engine**
+**Parcel transpiles our JSX before it reaches the JS Engine**.
 Transpiling refers to the process of modifying our JSX/React code into browser-understandable code.
 
 Parcel does not perform Transpiling on its own! It uses **Babel** to perform transpilation!!
@@ -58,7 +152,7 @@ React cannot uniquely identify the newly to-be-rendered item in the page, and th
 **Very Important: Do NOT use `index` as a key, as it results in it being an antipattern, rather than being helpful. Please use a data specific id as the identifier, without depending on the map `index` or iteration `index`.
 Using `index` as a key should always be the last resort.**
 
-The technology that React uses to achieve this is called **Reconciliation**
+The technology that React uses to achieve this is called **Reconciliation**.
 **Read More on Reconciliation**: https://legacy.reactjs.org/docs/reconciliation.html
 
 **Other Important Subjects**
@@ -94,7 +188,7 @@ There are mainly 2 ways of exporting from a file:
 They are normal JS Utility functions that are available within React itself.
 The most commonly used 2 React Hooks are the following:
 	1. `useState()` - Used to create super-powerful State Variables in React
-	2. `useEffect()` - 
+	2. `useEffect()` - Used to trigger functions once the component has rendered.
 
 #### useState ()
 
