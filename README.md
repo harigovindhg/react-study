@@ -1,4 +1,4 @@
-# React Training Learnings
+# React Learnings
 
 React is a library that works on top of the existing JS, providing more features via pre-defined functions and functionalities
 
@@ -574,5 +574,7 @@ In order to retrieve the data from the Redux Store and use in the UI, we will us
 A `selector` will read the data from the slice of the Redux Store and return to component.
 
 This process where we use a `selector` to keep our component in sync with slice in the Redux Store is called **Subscribing to the store.**
+
+Architecture diagram explaining the same is given below:
 
 ![Redux Architecture.png](/assets/images/Redux%20Architecture.png)
