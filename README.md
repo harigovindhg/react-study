@@ -537,3 +537,42 @@ return (
 **We can create multiple contexts, override anywhere we want, and only for specific sections**
 
 `UserContext.Providers` can be nested, and is perfectly fine.
+
+
+### Redux
+
+Redux is a global state store that works on the Data Layer of the React App.
+
+Redux is not a mandatory tool, and for many small-medium scale projects, we can achieve data stores using `contexts` itself!
+
+Use it wisely, and only when needed!
+
+Note: Redux is not the only data store library available for JS Apps. Another example is `Zustand`.
+
+The main advantage of Redux is that it makes it very easy to debug the data. Mainly using the Redux Developer Tools Chrome Extension
+
+Earlier, Redux was extremely complicated to set-up, and required many packages to be functional. To fix this, now Redux offers **Redux Toolkit (RTK)**
+
+#### Architecture of Redux Toolkit
+
+Redux Store can be considered as a large JS Object with multiple data, and is present in a global memory
+
+In order to avoid obscenely large JS Object files, the Redux Store stores data in `Slices`.
+`Slices` are basically small chunks of data which are logically separated, and stored in the Redux Store.
+
+Let us understand the architecture and functioning better with the help of an example:
+Consider we are adding the feature of a Cart, where user can add food items from a restaurant, and then review in the cart page. We will use Redux to develop this.
+
+When a User clicks on the `ADD +`  button on a food item, We will expect the item data to be immediately pushed to the Redux Store. **But this is not possible**
+
+Instead, on click of the `ADD +` button, we will `dispatch` an `action`, which in turn calls a `Reducer function`.
+This `Reducer Function` will be the one that will update the `Slice` of our `Redux Store`.
+
+##### Subscribing to the Store 
+
+In order to retrieve the data from the Redux Store and use in the UI, we will use a `selector`
+A `selector` will read the data from the slice of the Redux Store and return to component.
+
+This process where we use a `selector` to keep our component in sync with slice in the Redux Store is called **Subscribing to the store.**
+
+![[Redux Architecture.png]]
