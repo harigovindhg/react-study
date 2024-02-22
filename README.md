@@ -752,5 +752,14 @@ Also, we export the Slice reducers with the `slice_name.reducer`, since when we 
 
 Before Redux Toolkit, there was a rule that we should never mutate the state present in the slice of the Redux Store. 
 This used to cause a lot of issues with developers mistakenly mutating the states.
+Also, `return` was also mandatory.
 
 With the advent of Redux Toolkit, now the new rule is that **we should always mutate the state in a reducer function**!
+
+But, behind the scenes of Redux Toolkit, Redux is still creating immutable states and maintaining it. In order to do this, Redux is using something called `Immer`.
+
+RTK states that we have to either mutate the State, or return a new State
+
+#### Redux DevTools
+
+Use this extension to track the redux store, record dispatches, playback sessions of dispatch calls, browse logs, track diffs in each dispatch, etc.
