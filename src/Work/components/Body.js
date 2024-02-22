@@ -1,8 +1,9 @@
+import React from 'react';
 import Card, { withOpenLabel } from './Card';
 import Shimmer from './Shimmer';
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import useRestaurantList from '../utils/useRestaurantList';
+// import useRestaurantList from '../utils/useRestaurantList';
 import useOnlineStatus from '../utils/useOnlineStatus';
 import UserContext from '../utils/UserContext';
 
@@ -35,7 +36,7 @@ const Body = () => {
         } catch (error) {
             console.log('data fetch failed');
         }
-    }
+    };
 
     const getTopRatedRest = () => {
         const topRatedRest = restaurantListLocal.filter(restaurant => restaurant.info.avgRating > 4);
@@ -47,10 +48,10 @@ const Body = () => {
             fetchedRestaurant = fetchedRestaurant.filter(restaurant => restaurant?.info?.name?.toLowerCase().includes(searchText.toLowerCase()));
         }
         setSearchResults(fetchedRestaurant);
-    }
+    };
     const setGlobalUserNameInput = () => {
         setUserName(userNameInput);
-    }
+    };
     return (
         <div className="body relative h-full flex flex-col backdrop-blur-[5px] top-28">
             {onlineStatus ? <>
@@ -88,7 +89,7 @@ const Body = () => {
                 </div>
             </div>}
         </div>
-    )
-}
+    );
+};
 
 export default Body;

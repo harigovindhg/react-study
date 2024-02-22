@@ -16,7 +16,7 @@ React.createElement("h1", { id: 'heading' }, 'Hello World From React');
 React by default is not production-ready
 We have to [[Ignite our React App]] 
 
-### Ignite our React App
+## Ignite our React App
 We can create our package.json, which is a configuration file for the node packages we will use in our React App.
 
 We initiate the configuration using the below command:
@@ -58,7 +58,7 @@ To omit this file during our packaging, and pushing to github, we will create a 
 	/node_modules
 ```
 
-#### Packaging our React App
+### Packaging our React App
 
 `npx parcel <core_fileName>` lets parcel to bundle our project, and runs it on the localhost for us
 
@@ -68,7 +68,7 @@ To omit this file during our packaging, and pushing to github, we will create a 
 
 Parcel packages our files in a production ready package, and hosts it on a local server, which basically makes our code production ready.
 
-##### Features of Parcel
+#### Features of Parcel
 1. Creating Dev build of codebase
 2. Hosting to Local Server
 3. **HMR** - Hot Module Replacement - As soon as changes are made to the code, parcel repackages the code and reruns the server.
@@ -86,13 +86,13 @@ Parcel packages our files in a production ready package, and hosts it on a local
 15. Tree Shaking - removes unused code
 16. Transpiling
 
-##### Running parcel to create a production build
+#### Running parcel to create a production build
 
 `npx parcel build corefile_name`
 **Note:** remove App.js as the main file from package.json, to allow the build to be successful
 
 
-##### Browserslist
+#### Browserslist
 
 This is a node module which the user can use to specify the browsers which can run our code/webpage.
 
@@ -108,7 +108,7 @@ Sample Syntax:
 
 This list specified means that our code will 100% work on the mentioned list, for rest of the browsers, there is no 100% guarantee from our end, that the webpage will load without any issues.
 
-### Installing React in our project.
+## Installing React in our project.
 
 CDN links are usually not a good method to import react in our project.
 Always use npm to add React as a node module. This also ensures that we can keep it as a version controllable react package, and also a dependency in our project
@@ -121,7 +121,7 @@ npm install react-dom      \\ installs ReactDom
 ```
 
 
-### JSX
+## JSX
 Writing React in the default format is extremely tedious and lengthy.
 To simplify this, we will use **JSX (JavaScript eXpressions)**
 JSX is not HTML, it is rather, a HTML-Like, or XML-Like syntax.
@@ -143,7 +143,7 @@ React can be written using 2 methods:
 1. Class Based Components - OLD Method
 2. [[Functional Components]] - NEW Method
 
-### React Keys (Very Important)
+## React Keys (Very Important)
 
 We should always provide a `key` for multiple children under a html element, which will help React with optimizing its render cycles, and helps with minimizing render time and overhead.
 
@@ -159,18 +159,18 @@ The technology that React uses to achieve this is called **Reconciliation**.
 	React Fiber: https://github.com/acdlite/react-fiber-architecture
 	React without ES6: https://legacy.reactjs.org/docs/react-without-es6.html
 
-### `< React.Fragment ><React.Fragment />` ( now `<Fragment ><Fragment />`) or `<></>`
+## `< React.Fragment ><React.Fragment />` ( now `<Fragment ><Fragment />`) or `<></>`
 
 React.Fragment (Fragment) is a tag which can be used to group a list of children without using tags.
 
 
-### React File Structure
+## React File Structure
 
 We can keep our components in a `components` folder, and our APIs in an `api` folder. This is a generic market practice, and React does not force you to follow any specific practice.
 
 It is also a good practice to name the components with the exact name as that of the function inside the file. This facilitates easy readability.
 
-### Exporting
+## Exporting
 
 There are mainly 2 ways of exporting from a file:
 1. Default Export: Default way of exporting a component/object/data from a file. Can only be used once per file, as multiple default exports are not allowed.
@@ -183,14 +183,14 @@ There are mainly 2 ways of exporting from a file:
 
 **Note**:  It is always good to keep components less than 100 lines long, as it maintains the readability of the code,
 
-### React Hooks
+## React Hooks
 
 They are normal JS Utility functions that are available within React itself.
 The most commonly used 2 React Hooks are the following:
 	1. `useState()` - Used to create super-powerful State Variables in React
 	2. `useEffect()` - Used to trigger functions once the component has rendered.
 
-#### useState ()
+### useState ()
 
 React does not keep track of changes made to normal variables, since there are no trackers for React to know from. In order to facilitate dynamic re-rendering of the DOM with changes to the variables, we need to create State variables. 
 
@@ -203,7 +203,7 @@ useState syntax follows the below logic:
 		- This is just an array de-structuring, where useState returns an array with 2 items, and the variable is the first element, with the setter function being the second item.
 	- The first parameter to the useState function is the default expected value of the variable you are creating
 
-#### useEffect ()
+### useEffect ()
 
 We will always import useEffect as how we import named exports, within curly braces.
 i.e.: `import { useEffect } from 'react';`
@@ -218,7 +218,7 @@ useEffect syntax follows the below logic:
 		  3. If dependency is provided, then useEffect is triggered every time the dependency value changes
 	- If you want to trigger any function/cleanup task once the component unmounts, use a return function within the useEffect itself
 
-#### Normal and State Variables
+### Normal and State Variables
 
 Normal variables, if modified through a function in the component, will not result in a component re-render, as React maintains it as a static variable (in a way). We are not notifying React to "React" to the data modification.
 
@@ -237,7 +237,7 @@ React Render runs on a 2 cycle process:
 
 Diffing is what makes React FAST.
 
-### Routing
+## Routing
 
 Routing basically refers to redirecting to separate paths based on links in a page
 
@@ -320,7 +320,7 @@ const appRouter = createBrowserRouter({
 ```
 
 
-#### Note: Very Important!!
+### Note: Very Important!!
 
 Never ever use anchor href tags to redirect inside a React App, as it defeats the purpose of pages loading in a React manner!
 
@@ -339,26 +339,26 @@ import { Link } from 'react-router-dom';
 
 This greatly increases efficiency and smoothness of the page, and also has huge performance improvement over using `a` tags
 
-#### Routing in Web Apps
+### Routing in Web Apps
 
 There are 2 types of Routing:
 	1. Server Side Routing
 	2. Client Side Routing
 
-##### Server Side Routing
+#### Server Side Routing
 Server Side Routing is when the user routes to a a page, and the page details and resources are fetched from the server.
 	This is usually meant as a on-demand load that will fetch most, if not all the data that the user will ever see/check for that specific section.
 
-##### Client Side Routing
+#### Client Side Routing
 Client Side Routing is when the Server Side Routing has already completed, and now all the remaining routing is happening at the Client side alone, without fetching routing information from the server.
 
-### Dynamic Routing
+## Dynamic Routing
 
 We can give dynamic routing using `/:dynamicPath`
 We can then extract this dynamic path in our component using the `useParams` hook provided by react-router-dom
 
 
-### Class Components
+## Class Components
 
 Use your Project knowledge
 
@@ -371,7 +371,7 @@ React rendering of components works in 3 stages,
 	Mounting
 	Updating
 	Unmounting
-#### Lifecycle Hooks 
+### Lifecycle Hooks 
 Class Components also have multiple Lifecycle Hooks, including:
 	**componentDidMount**: This is called once the render of the current component is completed.
 	component. The main purpose is to make API calls, since the page has rendered, and now APIs can be called to fetch the data. This also helps with `lazy loading` of pages.
@@ -383,18 +383,18 @@ https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
 
 NEVER COMPARE CLASS COMPONENT LIFECYCLE METHODS TO FUNCTIONAL COMPONENT USEEFFECT
 
-### Optimizing a Web App
+## Optimizing a Web App
 
-#### Single Responsibility Principle
+### Single Responsibility Principle
 
 Always make sure that each component that you create handles only a single task, i.e:  has a **single responsibility**
 
 This also utilizes modularity of components, and helps with testing and issue detection
 
-#### Custom Hooks
+### Custom Hooks
 We can create custom hooks to abstract certain functions which might be used on more than one component, and may/may not be too large to be in a single component.
 
-#### 'Chunking' aka 'Code Splitting' aka 'Dynamic Bundling' aka 'Lazy Loading' aka 'On-Demand Loading' aka 'Dynamic Import'
+### 'Chunking' aka 'Code Splitting' aka 'Dynamic Bundling' aka 'Lazy Loading' aka 'On-Demand Loading' aka 'Dynamic Import'
 
 Refers to breaking down an App into smaller chunks, bundling the code in smaller chunks.
 
@@ -413,7 +413,7 @@ We will run into the issue of synchronous inputs if we stop at this step. The is
 But this takes time (miniscule, but still not instantaneous). Which means that this fetching is asynchronous.
 Our click, redirection, and render calls however, is synchronous, which will cause React to suspend the render, and throw an error, since the codebase for the component wasn't fetched synchronously.
 
-##### Suspense
+#### Suspense
 To fix the synchronous render call for asynchronously fetched codebase, we have to use `Suspense` component.
 We will use this component as a wrapper on top of the component we are lazy loading.
 
@@ -442,25 +442,25 @@ const appRoutes = createBrowserRouter({
 
 The `fallback` property is to tell React to render the JSX passed to `fallback` till lazy loading is completed
 
-### Higher Order Components
+## Higher Order Components
 
 A Higher Order Component is a component that takes a component as an input, and returns another component.
 
 A Higher Order Component will always be a pure function, meaning: it will never modify the component itself, only enhance by adding to it
 
-### Lifting of States
+## Lifting of States
 
 Lifting of states refer to moving state variables from a child component to a parent component. This is usually done to make uncontrolled child components into controlled child components
 
 Read More: https://react.dev/learn/sharing-state-between-components#lifting-state-up-by-example
-### Controlled Components and Uncontrolled Components
+## Controlled Components and Uncontrolled Components
 
  A Controlled Component is a component which is controlled by its parent component.
  An Uncontrolled Component is a component which is not controlled by its parent.
 
 E.g.: A Component which has a property to show/hide some of its contents, but the control for that feature is provided from its own parent component - This is a Controlled Component.
 
-### Prop Drilling
+## Prop Drilling
 
 Prop Drilling refers to passing props from a parent to a child component, and to its child component, which is used within that innerchild component.
 
@@ -470,7 +470,7 @@ To avoid excessive prop drilling, we can use **useContext** hook to maintain a g
 
 Read More: https://react.dev/learn/passing-data-deeply-with-context#the-problem-with-passing-props
 
-### useContext
+## useContext
 
 useContext is a react hook used to create `contexts` which contains data that can be accessed anywhere in the app.
 Popular use cases for such a context is Login state, to track the login state, and login user data.
@@ -488,7 +488,7 @@ const UserContext = createContext({
 export default UserContext;
 ```
 
-#### Consumers
+### Consumers
 
 We can then access this created context in any component that we need using the `useContext` react hook.
 
@@ -514,7 +514,7 @@ console.log(data.loggedInUser);
 
 `useContext` and `<ContextValue.Consumer>` are 2 methods by which contexts can be consumed.
 
-#### Providers
+### Providers
 
 We also will need to update the context values at some point ( In the case of a login page, once the user successfully logs in, we will have to update the context ).
 
@@ -539,7 +539,7 @@ return (
 `UserContext.Providers` can be nested, and is perfectly fine.
 
 
-### Redux
+## Redux
 
 Redux is a global state store that works on the Data Layer of the React App.
 
@@ -553,7 +553,7 @@ The main advantage of Redux is that it makes it very easy to debug the data. Mai
 
 Earlier, Redux was extremely complicated to set-up, and required many packages to be functional. To fix this, now Redux offers **Redux Toolkit (RTK)**
 
-#### Architecture of Redux Toolkit
+### Architecture of Redux Toolkit
 
 Redux Store can be considered as a large JS Object with multiple data, and is present in a global memory
 
@@ -568,7 +568,7 @@ When a User clicks on the `ADD +`  button on a food item, We will expect the ite
 Instead, on click of the `ADD +` button, we will `dispatch` an `action`, which in turn calls a `Reducer function`.
 This `Reducer Function` will be the one that will update the `Slice` of our `Redux Store`.
 
-##### Subscribing to the Store 
+#### Subscribing to the Store 
 
 In order to retrieve the data from the Redux Store and use in the UI, we will use a `selector`
 A `selector` will read the data from the slice of the Redux Store and return to component.
@@ -578,3 +578,179 @@ This process where we use a `selector` to keep our component in sync with slice 
 Architecture diagram explaining the same is given below:
 
 ![Redux Architecture.png](/assets/images/Redux%20Architecture.png)
+
+### Coding Redux into our App
+
+We will need 2 libraries to get started with Redux.
+	1. Redux/ Redux Toolkit - `@reduxjs/toolkit`
+	2. React Redux - `react-redux`
+
+Steps to set up Redux in our App:
+1. Install dependencies ( `@reduxjs/toolkit` and `react-redux` )
+2. Build our Redux Store
+3. Connect Store to App
+4. Create Slice ( eg: Cart slice )
+5. create dispatch(action)
+6. selector
+
+#### Install Dependencies
+
+Run the below commands to install redux into the app:
+```
+npm i @reduxjs/toolkit
+npm i react-redux
+```
+#### Building Our Redux Store
+
+We will use a named import function called `configureStore` to create the store.
+
+Syntax:
+
+```
+import { configureStore } from '@reduxjs/toolkit'
+const appStore = configureStore({});
+export default appStore;
+```
+
+#### Connect Store to App
+
+Now we will create a `Provider` to connect our App to the Store
+This `Provider` comes from the `react-redux` library, since the Provider is a bridge that is connecting our React App to the Redux Store. 
+
+**Note:** Redux is not a library specific to React, it works with multiple frameworks including Angular,
+but Provider is a bridge that is offered by another library `react-redux`, which helps us connect to the Redux Store.
+
+We will use `Provider` by wrapping our entire app in the `<Provider>` tag, and passing our `appStore` store that we created using configureStore as the `store` prop within the tag.
+
+Syntax:
+```
+import { Provider } from 'react-redux';
+import appStore from '../utils/appStore.js';
+
+return (
+<Provider store={appStore}>
+	<App>
+</ Provider>
+)
+```
+
+#### Creating Slices
+
+We will create slices using the `createSlice` function from `@reduxjs/toolkit`.
+
+createSlice takes 3 inputs, namely:
+1. name - Name of the slice
+2. initialState - Initial State value of the slice
+3. reducers - this will contain an object full of reducer functions, labelled with an action name.
+
+Syntax: 
+```
+import {createSlice} from '@reduxjs/toolkit'; 
+
+const cartSlice = createSlice({
+	name: 'Cart',
+	initialState: {
+		items: []
+	},
+	reducers: {
+		addItem: (state, action) => {
+			state.items.push(action.payload);
+		}
+	}
+})
+```
+##### Reducers:
+
+Reducers are the functions which we will create in the `reducers` block of the createSlice parameter, and will contain the actual operation to be carried out on the slice.
+
+It is a callback function which takes 2 inputs, `state` and `action`, and updates the `state` using `action.payload`.
+
+While exporting we will export both the actions and reducers separately, in the following manner:
+
+```
+export const {addItem, removeItem, clearCart} = cartSlice.actions;
+export default cartSlice.reducer;
+```
+
+Once we have configured the reducer for the slice, we will also have to setup the reducer for the redux store itself that we have created.
+
+We will do that by adding a reducer block while creating the store. 
+Syntax is as follows:
+
+```
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './slices/cartSlice';
+const appStore = configureStore({
+	reducer: {
+		cart: cartReducer
+	}
+});
+export default appStore;
+```
+
+#### Dispatch an Action
+
+In order to update the data in the slice in the redux store, we will dispatch an action.
+We will use the `useDispatch` hook from `react-redux` to achieve this.
+We will use the `useDispatch` to call the action that we exported from the slice, and within the action, we will pass the data.
+
+Syntax:
+
+```
+import {addItem} from '../utils/slices/cartSlice';
+import {useDispatch} from `react-redux`;
+
+const dispatch = useDispatch();
+
+const addItemToCart = (item) => {
+	dispatch(addItem(item));
+};
+
+return (
+	<button onClick={() => addItemToCart('biryani')}>Add</button>
+);
+```
+
+
+#### Selector
+
+In order to subscribe to the store, we will have to use something called `selector`
+
+We will use a hook called `useSelector` to get access to the store.
+
+Syntax:
+```
+import {useSelector} from 'react-redux';
+
+const cart = useSelector((store) => store.cart.items);
+
+console.log(cart);
+```
+
+
+**Note (VERY IMPORTANT):** It is extremely more efficient to subscribe only to the specific item within the slice in the store, since subscribing is synchronous, and when size of objects within the slice increase in size, if we don't subscribe specifically the only item we need, it can lead to excessive processing time.
+
+This is because subscribing using a selector keeps the UI in sync with the data stored in the slice in the redux store, and updating the store will cause the UI to process the entire data from the store again.
+
+Explained with an example:
+
+```
+const cartItems = useSelector((store) => store.cart.items);
+```
+
+Is extremely more efficient than:
+
+```
+const cart = useSelector((store) => store.cart);
+const cartItems = cart.items;
+```
+
+**Note #2:** When declaring reducers inside the slice, we should use `reducers` tag. And when declaring the reducers inside the redux store, we should use `reducer` tag. This is because, within the slice, we are declaring multiple actions with reducer functions under the `reducers` tag, whereas, in the redux store, we are declaring multiple reducers within the reducer of the Store, hence `reducer` tag.
+Also, we export the Slice reducers with the `slice_name.reducer`, since when we are exporting, we will export all the reducers consolidated into one object.
+
+### Additional Notes (Important Foundational Knowledge)
+
+Before Redux Toolkit, there was a rule that we should never mutate the state present in the slice of the Redux Store. 
+This used to cause a lot of issues with developers mistakenly mutating the states.
+
+With the advent of Redux Toolkit, now the new rule is that **we should always mutate the state in a reducer function**!

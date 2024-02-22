@@ -1,3 +1,4 @@
+import React from 'react';
 import restaurantList from "../utils/restaurantList.json";
 
 const Shimmer = (props) => {
@@ -18,32 +19,25 @@ const Shimmer = (props) => {
         </div >
       ))
     );
-  }
+  };
   const restaurantMenuSkeleton = () => {
     return (
       <div className="restaurant-data">
-        <div className="restaurant-primary-data">
-          <div className="rest-core-image skeleton">
-            <img />
+        <div className="restaurant-primary-data bg-no-repeat bg-contain flex items-center flex-wrap">
+          <div className="rest-core-image skeleton w-[15%] p-0 bg-cover bg-no-repeat bg-transparent h-64 rounded-xl transition-all ease-in-out relative">
+            <img className='rounded-xl w-full' />
           </div>
-          <div className="restaurant-name-and-details">
-            <h2 className="skeleton"></h2>
-            <p className="rest-rating skeleton"></p>
+          <div className="restaurant-name-and-details ml-[10px] w-4/5">
+            <h2 className="skeleton w-52 p-0 bg-cover bg-no-repeat bg-transparent h-8 rounded-xl transition-all ease-in-out relative"></h2>
+            <p className="rest-rating skeleton w-64 p-0 bg-cover bg-no-repeat bg-transparent h-5 rounded-xl transition-all ease-in-out relative"></p>
             <hr />
-            <p className="rest-rating skeleton"></p>
-            <p className="rest-rating skeleton"></p>
-            <p className="rest-rating skeleton"></p>
+            <p className="rest-rating skeleton w-64 p-0 bg-cover bg-no-repeat bg-transparent h-5 rounded-xl transition-all ease-in-out relative"></p>
+            <p className="rest-rating skeleton w-64 p-0 bg-cover bg-no-repeat bg-transparent h-5 rounded-xl transition-all ease-in-out relative"></p>
+            <p className="rest-rating skeleton w-64 p-0 bg-cover bg-no-repeat bg-transparent h-5 rounded-xl transition-all ease-in-out relative"></p>
           </div>
         </div>
         <hr style={{ borderTopStyle: 'dashed' }} />
-        <div className="veg-only-filter">
-          <h3 className="skeleton"></h3>
-          <label className="switch" >
-            <input type="checkbox" />
-            <span className="slider round"></span>
-          </label>
-        </div>
-        <div className="sub-type">
+        <div className="sub-type mb-2 mt-2 p-2 rounded-xl border-2 transition-accordion ease-in-out duration-[0.4s]">
           <h2 className="skeleton"></h2>
           <div className="food-details-wrapper">
             <div className="food-details">
@@ -108,7 +102,7 @@ const Shimmer = (props) => {
         </div>
       </div>
     );
-  }
+  };
   const { isRestaurantShimmer } = props;
   return isRestaurantShimmer === true ? (
     restaurantMenuSkeleton()

@@ -1,24 +1,28 @@
 // import { HEADER_LOGO } from '../utils/constants';
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UserContext from "../utils/UserContext";
-const Logo = () => {
-    return (
-        <div className='logo'>
-            {/* <img src={HEADER_LOGO} alt='CraveIt' /> */}
-            <h2>{'Crave It'}</h2>
-        </div>
-    );
-}
+import { useSelector } from "react-redux";
+// const Logo = () => {
+//     return (
+//         <div className='logo'>
+//             {/* <img src={HEADER_LOGO} alt='CraveIt' /> */}
+//             <h2>{'Crave It'}</h2>
+//         </div>
+//     );
+// };
 
 const Header = () => {
-    const [buttonName, setButtonName] = useState('Login')
+    const [buttonName, setButtonName] = useState('Login');
     const loginUser = () => {
-        buttonName === 'Login' ? setButtonName('Logout') : setButtonName('Login')
-    }
+        buttonName === 'Login' ? setButtonName('Logout') : setButtonName('Login');
+    };
     const onlineStatus = useOnlineStatus();
     const data = useContext(UserContext);
+    const cart = useSelector((store) => store.cart.items);
+    console.log(cart);
+
     return (
         <header id="header" className={`header ${onlineStatus ? 'online' : 'offline shadow-offline hover:shadow-offlineHover'} flex flex-row bg-offWhite/50 flex-wrap content-evenly items-center fixed top-4 left-1/2 -translate-x-1/2 z-10 backdrop-blur-sm rounded-full w-3/5 h-20 justify-evenly transition-all duration-splitsec`}>
             <div className='logo w-full contents transition-all duration-1000 font-uzicute '>
@@ -29,14 +33,14 @@ const Header = () => {
                 <Link to="/" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Home</Link>
                 <Link to="about" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">About Us</Link>
                 <Link to="profile" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Profile</Link>
-                <Link to="cart" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Cart</Link>
                 <Link to="grocery" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">{'Grocery (NEW!)'}</Link>
                 <a className="login-button transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full" onClick={loginUser}>{buttonName}</a>
+                <Link to="cart" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full inline-flex w-28">{'🛒'}<div className="bg-red-500 rounded-full w-full h-full flex justify-center text-white">{cart.length}</div></Link>
             </div>
             <h4>{`Online: ${onlineStatus ? '✅' : '🔴'}`}</h4>
             {buttonName === 'Logout' && <h4>{`Welcome ${data?.loggedInUser}`}</h4>}
         </header>
     );
-}
+};
 
 export default Header;

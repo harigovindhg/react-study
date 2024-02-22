@@ -1,3 +1,4 @@
+import React from 'react';
 import { Component } from 'react';
 class UserClass extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class UserClass extends Component {
     }
     async componentDidMount() {
         const { gitLink } = this.props;
-        console.log(`${this.props.name} Child ComponentDidMount`)
+        console.log(`${this.props.name} Child ComponentDidMount`);
         const gitData = await fetch(`https://api.github.com/users/${gitLink}`);
         const data = await gitData.json();
         this.timerInterval = setInterval(() => {
@@ -19,20 +20,20 @@ class UserClass extends Component {
         if (data) {
             this.setState({
                 userInfo: data
-            })
+            });
         }
     }
 
     componentDidUpdate() {
-        console.log(`${this.props.name} Child ComponentDidUpdate`)
+        console.log(`${this.props.name} Child ComponentDidUpdate`);
     }
 
     componentWillUnmount() {
         clearInterval(this.timerInterval);
-        console.log('componentWillUnmount called')
+        console.log('componentWillUnmount called');
     }
     render() {
-        console.log(`${this.props.name} Child Render`)
+        console.log(`${this.props.name} Child Render`);
         const { name, location, bio, avatar_url } = this.state.userInfo;
         return (
             <div className="rest-card max-w-full min-w-[150px] flex-[0_1_16.66%] m-0 p-4">
@@ -50,7 +51,7 @@ class UserClass extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 

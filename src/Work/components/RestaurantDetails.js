@@ -1,20 +1,23 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Shimmer from "./Shimmer";
 import { CDN_URL } from "../utils/constants";
 import useRestaurantMenu from '../utils/useRestaurantMenu';
 import RestaurantItemAccordion from "./RestaurantItemAccordion";
+import { setRestName } from "../utils/slices/cartSlice";
+import { useDispatch } from "react-redux";
 
 const RestaurantDetails = () => {
   const [filterVeg, setFilterVeg] = useState(false);
   const [showIndex, setShowIndex] = useState(null);
   const { restId } = useParams();
   const restData = useRestaurantMenu(restId);
+  const dispatch = useDispatch();
 
 
   const filterVegetarian = () => {
     setFilterVeg(!filterVeg);
-  }
+  };
 
   const handleAccordionCollapse = (index) => {
     if (index === showIndex) {
@@ -22,6 +25,10 @@ const RestaurantDetails = () => {
     } else {
       setShowIndex(index);
     }
+  };
+
+  const storeRestaurantName = (restName) => {
+    dispatch(setRestName(restName));
   }
 
   const renderRestaurantDetails = () => {
@@ -34,8 +41,8 @@ const RestaurantDetails = () => {
     const { name, avgRating, costForTwoMessage, totalRatingsString, sla, feeDetails, veg, cloudinaryImageId } = restMainData[0]?.card?.card?.info;
     const itemList = restaurantMenuList[0]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
     const restaurantData = itemList?.filter(item => {
-      return item?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory'
-    })
+      return item?.card?.card?.['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory';
+    });
     return (
       <div className="restaurant-data">
         <div className="restaurant-primary-data bg-no-repeat bg-contain flex items-center flex-wrap ">
@@ -60,11 +67,11 @@ const RestaurantDetails = () => {
           </label> : ''}
         </div>
         {restaurantData?.map((item, index) => {
-          return <RestaurantItemAccordion key={`${item?.card?.card?.title}_${item?.card?.card?.type}`} {...item} isVegFilter={filterVeg} showItems={index === showIndex && true} handleAccordionCollapse={() => handleAccordionCollapse(index)} />
+          return <RestaurantItemAccordion key={`${item?.card?.card?.title}_${item?.card?.card?.type}`} {...item} isVegFilter={filterVeg} showItems={index === showIndex && true} handleAccordionCollapse={() => handleAccordionCollapse(index)} storeRestaurantName={() => storeRestaurantName(name)} />;
         })}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="body restaurant-data-main mx-[12%] my-0 p-[1%] bg-offWhite rounded-xl relative h-full flex flex-col backdrop-blur-[5px] top-28">

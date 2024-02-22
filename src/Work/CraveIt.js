@@ -1,19 +1,22 @@
 // Food Delivery portal
 import React, { lazy, Suspense } from "react";
 import ReactDom from "react-dom/client";
-import { StrictMode, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Header from "./components/Header.js";
 import Body from "./components/Body.js";
 import About from "./components/About.js";
 import Profile from "./components/Profile.js";
+import Cart from "./components/Cart.js";
 import Error from "./components/Error.js";
 // import Grocery from "./components/Grocery.js";
 import RestaurantDetails from "./components/RestaurantDetails.js";
 import UserContext from "./utils/UserContext.js";
-import User from "./components/User.js";
+// import User from "./components/User.js";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore.js";
 
-const Grocery = lazy(() => import('./components/Grocery.js'))   // Lazy Loading
+const Grocery = lazy(() => import('./components/Grocery.js'));   // Lazy Loading
 
 /**
  * - Header
@@ -63,17 +66,19 @@ const AppContainer = () => {
     }, []);
 
     return (
-        // loggedInUser = Default User
-        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-            {/* loggedInUser = Hari Govind */}
-            <div className="App">
-                {/* <UserContext.Provider value={{ loggedInUser: 'Elon' }}> */}
-                {/* loggedInUser = Elon */}
-                <Header />
-                {/* </UserContext.Provider> */}
-                <Outlet />
-            </div>
-        </UserContext.Provider>
+        <Provider store={appStore}>
+            {/* loggedInUser = Default User */}
+            <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+                {/* loggedInUser = Hari Govind */}
+                <div className="App">
+                    {/* <UserContext.Provider value={{ loggedInUser: 'Elon' }}> */}
+                    {/* loggedInUser = Elon */}
+                    <Header />
+                    {/* </UserContext.Provider> */}
+                    <Outlet />
+                </div>
+            </UserContext.Provider>
+        </Provider>
     );
 };
 const appRouter = createBrowserRouter([
@@ -92,6 +97,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/profile",
                 element: <Profile />,
+            },
+            {
+                path: "/cart",
+                element: <Cart />,
             },
             {
                 path: "/grocery",
