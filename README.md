@@ -899,7 +899,6 @@ test("'Sum' function should return sum of 2 numbers", () => {
 
 #### Writing Test Cases for React Components
 
-##### Unit Testing
 Writing test cases for React Components will follow the logic
 **Rendering** -> **Querying** -> **Assertion**
 i.e.:
@@ -918,7 +917,32 @@ test("Should load heading from 'Contact' component", () => {
 
 But this will throw an error if we try to run the test case. The error will state something along the lines of: `The imported JSX is not parseable by Jest`
 
-###### Fixing JSX not parseable issue
+##### Jest Helper Functions
+
+Jest provides 4 helper functions:
+- **beforeAll** - runs before all the test cases are executed
+- **beforeEach** - runs before each test case
+- **afterEach** - runs after each test case
+- **afterAll** - runs after all test cases
+
+```js
+beforeAll(() => {
+    console.log('Before All');
+});
+
+beforeEach(() => {
+    console.log('Before Each');
+});
+
+afterEach(() => {
+    console.log('After Each');
+});
+
+afterAll(() => {
+    console.log('After All');
+})
+```
+##### Fixing JSX not parseable issue
 
 Jest does not allow parsing/testing of JSX components out of the box. So in order to make it possible, we will add another babel package known as `@babel/preset-react`.
 
@@ -944,7 +968,7 @@ We are adding the `runtime: 'automatic'` tag along with the configuration here.
 
 This will throw an error again if we try to run the test case. The new error will state something along the lines of: `expect(heading).toBeInTheDocument() is not a function`.
 
-###### Fixing the `toBeInTheDocument is not a function` issue
+##### Fixing the `toBeInTheDocument is not a function` issue
 
 This error is thrown because we dont have this functionality available from base Jest.
 
@@ -957,8 +981,7 @@ npm i -D @testing-library/jest-dom
 ```
 
 Now, our test cases will run fine, as all functionalities are now available.
-
-###### Getting elements in Jest
+##### Getting elements in Jest
 
 While writing test cases for elements in a page, we can write multiple methods.
 `jest-dom` offers multiple methods, some of which include:
@@ -966,7 +989,7 @@ While writing test cases for elements in a page, we can write multiple methods.
 2. getByText() - returns element that contain that text in the rendered component.
 3. getByAltText() - return image that contain the specific alt text
 4. getByPlaceholderText() - return element that contain the specific placeholder text
-5. etc.
+5. **getElementsByTestId()** - return element that contains the specific `data-testId` attribute value. _**This is extremely useful when we are unsure on how to retrieve a specific element from a component.**
 
 If you want to test for all the elements of a particular role, placeholder, alt text etc, we have to use the `getAllBy<attribute>` functions, where `<attribute>` will be the `Role`, `AltText`, `Text` etc.
 
@@ -977,7 +1000,7 @@ eg:
 expect(elements.length).toBe(2)
 ```
 
-###### Grouping Test Cases
+##### Grouping Test Cases
 
 Consider a scenario where we have a large number of test cases that can be grouped on the basis of some criteria, we can do so using `describe`
 
@@ -992,6 +1015,7 @@ describe('Test cases for X component', () => {
 
 Note: `describe` blocks can be nested also
 
+##### Unit Testing
 ###### Writing Unit test cases for complex components which use Redux and React Router
 
 Jest is not capable of parsing components where redux stores are used, Or contain react-router , or any third party library components.
@@ -1059,3 +1083,92 @@ it('Should update component on click', () => {
 });
 ```
 
+
+
+We can also pass props to the components we are testing:
+Syntax:
+```js
+import MOCK_DATA from '../mocks/componentProps.json';
+
+it('Should render Component using the props', () => {
+	render(
+		<Component data={MOCK_DATA} />
+	)
+	const element = screen.getByRole('element_name');
+	expect(element).toBeInTheDocument();
+});
+```
+
+##### Integration Testing
+
+###### Setting up HMR based Jest testing
+
+In order to set up automatic test execution on every Save, we can utilize the `jest --watch` command.
+We can also set this command up in our package.json under the alias `watch-test` in the following manner:
+
+```JSON
+{
+"scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest",
+    "watch-test": "jest --watch"
+  },
+}
+```
+
+###### Setting up test cases for state updating components
+
+For components that contain state updates, we should wrap it in an `act` callback function.
+`act` is a function imported from `react-dom/test-utils`, and is an asynchronous function that expects an async callback function that returns the render of the component.
+
+Syntax:
+```js
+import {act} from 'react-dom/test-utils';
+import Component from '../Component';
+it('Should render the component', async () => {
+	await act(async () => render (<Component />));
+});
+```
+
+###### Setting up test cases for components that utilize `fetch` calls
+
+`fetch` is a browser-provided feature, and is not something offered natively by JS. As such, Jest cannot resolve the fetch function during test execution.
+
+In order to fix this, we will create a global level polyfill for jest within our test file itself.
+This polyfill will follow the structure:
+- Will return a Promise which will resolve to a `json` property, which has a function that returns a Promise which resolves to the required data as its value.
+The syntax of this polyfill is as follows:
+```js
+global.fetch = jest.fn(() => {
+	return Promise.resolve({
+		json: () => Promise.resolve(data)
+	});
+});
+```
+
+###### Triggering the Search field search and performing integration testing
+
+We can utilize the `fireEvent.change()` function to simulate entering a value inside the input field
+The `change` function expects a React Fiber Node/JSX Object as first argument, and the event function which is sent within the `onChange` function in the component for the field as the second argument.
+
+Syntax:
+```js
+fireEvent.change(inputElement, {target: {value: 'input_value'}});
+```
+
+You can render multiple components for integration testing. These can even be components that will render in a different page in our actual portal.
+Syntax:
+```js
+it('Should load multiple components', async () => {
+    await act(async () => render(
+        <BrowserRouter>
+            <Provider store={appStore}>
+                <Component1 />
+                <Component2 />
+                <Component3 />
+            </Provider>
+        </BrowserRouter>
+    ));
+});
+```
