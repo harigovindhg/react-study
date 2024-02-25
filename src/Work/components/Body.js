@@ -75,7 +75,7 @@ const Body = () => {
                     {!dataLoaded || restaurantListLocal?.length === 0 ?
                         <Shimmer />
                         : searchResults?.map((item) => (
-                            <Link className='card-wrapper w-1/6' to={`/restaurants/${item.info.id}`} key={item.info.id}>
+                            <Link data-testid='restCard' className='card-wrapper w-1/6' to={`/restaurants/${item.info.id}`} key={item.info.id}>
                                 {/* If the restaurant is Open, then add an Open Label to it */}
                                 {item.info.isOpen ? <RestCardWithOpenLabel {...item} id={`userCard_${item.info.id}`}
                                 /> : <Card {...item} id={`userCard_${item.info.id}`} />}

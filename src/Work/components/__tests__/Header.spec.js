@@ -66,8 +66,8 @@ it('Should change Login button to Logout on click', () => {
     );
 
     const loginButton = screen.getByText('Login');
+    fireEvent.dblClick(loginButton);
     fireEvent.click(loginButton);
-    fireEvent.click(loginButton);
-    fireEvent.click(loginButton);
-    expect(loginButton).toHaveTextContent('Logout');
+    const logoutButton = screen.getByText('Logout');
+    expect(logoutButton).toBeInTheDocument();
 });

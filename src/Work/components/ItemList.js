@@ -20,7 +20,7 @@ const ItemList = (props) => {
             {filteredItems?.map((subCatItem) => {
                 const { id, name, imageId, description, price, ratings, isVeg, defaultPrice } = subCatItem?.card?.info;
                 return (
-                    <div className="food-details-wrapper rounded-xl transition-all duration-[0.4s]" key={id} >
+                    <div data-testid='rest-item' className="food-details-wrapper rounded-xl transition-all duration-[0.4s]" key={id} >
                         <div className="food-details flex justify-between p-5 m-2 border-b-[1px] border-darkerGray">
                             <div className="food-details-core w-10/12">
                                 <div className={isVeg === 1 ? 'icon-veg w-6 h-6 content-veg' : 'icon-non-veg w-6 h-6 content-nonVeg'} />

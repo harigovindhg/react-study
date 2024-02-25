@@ -18,7 +18,7 @@ const RestaurantItemAccordion = ({ card, isVegFilter, showItems, handleAccordion
     return (
         <div className="sub-type mb-2 mt-2 p-2 rounded-xl border-2 transition-accordion ease-in-out duration-[0.4s]" key={`${title}_${type}`}>
             {title !== undefined && filteredItems?.length > 0 ? <>
-                <div className="expanded w-full h-14 flex justify-between transition-accordion ease-in-out duration-[0.4s] items-center cursor-pointer" onClick={() => handleAccordion()}>
+                <div data-testid={`${title}_${type}`} className="expanded w-full h-14 flex justify-between transition-accordion ease-in-out duration-[0.4s] items-center cursor-pointer" onClick={() => handleAccordion()}>
                     <h2>{`${title} (${filteredItems?.length})`}</h2>
                     <strong className="m-1 indicator">{showItems ? "🔻" : "🔺"}</strong>
                 </div>

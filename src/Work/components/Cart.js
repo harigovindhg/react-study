@@ -15,7 +15,7 @@ const Cart = () => {
     }
     return (
         <div className='mx-[12%] my-0 p-[1%] bg-offWhite rounded-xl relative h-full flex flex-col backdrop-blur-[5px] top-28'>
-            <div className='text-center'>{cartItems.length > 0 ? <h1 >{`There are ${cartItems.length} item(s) in the cart`}</h1> : <div><h1>{`Cart is Empty :(`}</h1><p className='text-lg'>Add some delicious food from restaurants!</p></div>}</div>
+            <div data-testid='cart-label' className='text-center'>{cartItems.length > 0 ? <h1 >{`There are ${cartItems.length} item(s) in the cart`}</h1> : <div><h1>{`Cart is Empty :(`}</h1><p className='text-lg'>Add some delicious food from restaurants!</p></div>}</div>
             {
                 cartItems.length > 0 && <div className='p-2 m-2 bg-offWhiteDarker rounded-lg'>
                     {restName && (
@@ -25,7 +25,7 @@ const Cart = () => {
                         </div>)}
                     {cartItems?.map(item => {
                         return (
-                            <div className='flex flex-wrap items-center justify-between p-2 m-2 my-4 border-b-2 border-darkmodeheader border-solid border-2 rounded-lg '>
+                            <div data-testid='cart-item' key={`${item.id}`} className='flex flex-wrap items-center justify-between p-2 m-2 my-4 border-b-2 border-darkmodeheader border-solid border-2 rounded-lg '>
                                 <div className='flex flex-wrap items-center'>
                                     <div className={`w-6 h-6 ${item.isVeg === 1 ? 'icon-veg content-veg' : 'icon-non-veg content-nonVeg'}`} />
                                     <h3 className='text-darkmodebody ml-2'>{item.name}</h3>
