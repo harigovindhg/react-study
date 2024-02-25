@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Header from "./components/Header.js";
 import Body from "./components/Body.js";
 import About from "./components/About.js";
-import Profile from "./components/Profile.js";
+import Contact from "./components/Contact.js";
 import Cart from "./components/Cart.js";
 import Error from "./components/Error.js";
 // import Grocery from "./components/Grocery.js";
@@ -95,8 +95,8 @@ const appRouter = createBrowserRouter([
                 element: <About />,
             },
             {
-                path: "/profile",
-                element: <Profile />,
+                path: "/contact",
+                element: <Contact />,
             },
             {
                 path: "/cart",

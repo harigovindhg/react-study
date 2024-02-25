@@ -60,15 +60,15 @@ const Body = () => {
                         <input type='text' className='w-[30%] h-[50px] text-center m-2.5 rounded-[10px] border-[none] bg-offWhite' placeholder='Search for your favourite dishes' value={searchText} onChange={(e) => {
                             setSearchText(e.target.value);
                         }} />
-                        <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={fetchSearchedRest}>{'Search'}</button>
+                        <button id='rest_search' className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' onClick={fetchSearchedRest}>{'Search'}</button>
                     </div>
                     <div className='search-inner flex w-1/2'>
                         <input type='text' className='w-[30%] h-[50px] text-center m-2.5 rounded-[10px] border-[none] bg-offWhite' placeholder='User Name' value={userNameInput} onChange={(e) => {
                             setUserNameInput(e.target.value);
                         }} />
-                        <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={setGlobalUserNameInput}>{'Set'}</button>
+                        <button id='globalName_setter' className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' onClick={setGlobalUserNameInput}>{'Set'}</button>
                     </div>
-                    <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='filter-btn' onClick={getTopRatedRest} >{'Top Rated'}</button>
+                    <button className='filter cursor-pointer w-[15%] m-2.5 rounded-[50px] border-[0.5px] border-dashed border-[black] hover:border-[1px] hover:border-solid hover:border-[black] hover:bg-hoverLink' id='top_rest' onClick={getTopRatedRest} >{'Top Rated'}</button>
                 </div>
                 <div className='rest-card-container w-[90%] ml-[5%] mr-[5%] flex justify-start items-start flex-wrap flex-row'>
                     {/* {!dataLoaded || restaurantListLocal.length === 0 ? */}

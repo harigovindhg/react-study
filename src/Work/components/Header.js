@@ -21,7 +21,6 @@ const Header = () => {
     const onlineStatus = useOnlineStatus();
     const data = useContext(UserContext);
     const cart = useSelector((store) => store.cart.items);
-    console.log(cart);
 
     return (
         <header id="header" className={`header ${onlineStatus ? 'online' : 'offline shadow-offline hover:shadow-offlineHover'} flex flex-row bg-offWhite/50 flex-wrap content-evenly items-center fixed top-4 left-1/2 -translate-x-1/2 z-10 backdrop-blur-sm rounded-full w-3/5 h-20 justify-evenly transition-all duration-splitsec`}>
@@ -32,13 +31,13 @@ const Header = () => {
             <div className="navItem transition-opacity duration-[1s]">
                 <Link to="/" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Home</Link>
                 <Link to="about" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">About Us</Link>
-                <Link to="profile" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Profile</Link>
+                <Link to="contact" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">Contact</Link>
                 <Link to="grocery" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full">{'Grocery (NEW!)'}</Link>
                 <a className="login-button transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full" onClick={loginUser}>{buttonName}</a>
                 <Link to="cart" className="transition-all duration-splitsec relative py-4 px-8 rounded-md hover:bg-hoverLink hover:rounded-full inline-flex w-28">{'🛒'}<div className="bg-red-500 rounded-full w-full h-full flex justify-center text-white">{cart.length}</div></Link>
             </div>
-            <h4>{`Online: ${onlineStatus ? '✅' : '🔴'}`}</h4>
-            {buttonName === 'Logout' && <h4>{`Welcome ${data?.loggedInUser}`}</h4>}
+            <h3>{`Online: ${onlineStatus ? '✅' : '🔴'}`}</h3>
+            {buttonName === 'Logout' && <h3>{`Welcome ${data?.loggedInUser}`}</h3>}
         </header>
     );
 };

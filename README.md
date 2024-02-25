@@ -7,7 +7,7 @@ React.createElement helps us to create a HTML Element inside the DOM.
 React.createElement syntax is as follows:
 
 #code #react
-```
+```JS
 React.createElement("h1", { id: 'heading' }, 'Hello World From React'); 
 		React createElement creates an object, which is to be rendered by the ReactDom 'render' function
 
@@ -20,7 +20,7 @@ We have to [[Ignite our React App]]
 We can create our package.json, which is a configuration file for the node packages we will use in our React App.
 
 We initiate the configuration using the below command:
-```
+```Node
 npm init
 ```
 which generates the package.json file for us.
@@ -28,7 +28,7 @@ which generates the package.json file for us.
 The most important package for our React project is a 'bundler', like Parcel, Webpack, Wheat etc.
 Install Parcel with this command
 
-```
+```Node
 npm install -D parcel
 ```
 
@@ -99,7 +99,7 @@ This is a node module which the user can use to specify the browsers which can r
 we will use it in our package.json
 
 Sample Syntax:
-```
+```JSON
 "browserslist": [
 "Last 2 Chrome versions",
 "Last 2 Firefox versions"
@@ -246,12 +246,12 @@ In react, we will use **react-router-dom** node module to achieve routing.
 To start off, we need to create a routing configuration in our App.js (our base file).
 we import `createBrowserRouter` and `RouterProvider` to help set this up
 **Syntax:**
-```
+```JS
 import {createBrowserRouter, RouterProvider} from react-router-dom
 ```
 
 createBrowserRouter function accepts an array of objects with the below syntax:
-```
+```JS
 const appRouter = createBrowserRouter([
 	{
 		path: '/',
@@ -402,8 +402,10 @@ When the webpage loads initially, we dont want the codebase of the entire websit
 
 To make it so that only the necessary components are loaded, we will utilize `Lazy Loading`
 
+`Lazy Loading` utilizes a function `lazy` which is imported from `react`. `lazy` function expects a callback function as parameter, which returns an import call to the component to be lazy loaded.
+
 Syntax: 
-```
+```js
 const Container = lazy(() => import(<component_path>));
 ```
 
@@ -418,7 +420,7 @@ To fix the synchronous render call for asynchronously fetched codebase, we have 
 We will use this component as a wrapper on top of the component we are lazy loading.
 
 Syntax:
-```
+```js
 import { lazy, Suspense } from 'react';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
@@ -436,7 +438,7 @@ const appRoutes = createBrowserRouter({
 		}
 	]
 }
-})
+});
 
 ```
 
@@ -586,12 +588,12 @@ We will need 2 libraries to get started with Redux.
 	2. React Redux - `react-redux`
 
 Steps to set up Redux in our App:
-1. Install dependencies ( `@reduxjs/toolkit` and `react-redux` )
-2. Build our Redux Store
-3. Connect Store to App
-4. Create Slice ( eg: Cart slice )
-5. create dispatch(action)
-6. selector
+1. [[#Install Dependencies]]
+2. [[#Building Our Redux Store]]
+3. [[#Connect Store to App]]
+4. [[#Creating Slices]] ( eg: Cart slice )
+5. [[#Dispatch an Action]]
+6. [[#Selector]]
 
 #### Install Dependencies
 
@@ -606,7 +608,7 @@ We will use a named import function called `configureStore` to create the store.
 
 Syntax:
 
-```
+```js
 import { configureStore } from '@reduxjs/toolkit'
 const appStore = configureStore({});
 export default appStore;
@@ -623,7 +625,7 @@ but Provider is a bridge that is offered by another library `react-redux`, which
 We will use `Provider` by wrapping our entire app in the `<Provider>` tag, and passing our `appStore` store that we created using configureStore as the `store` prop within the tag.
 
 Syntax:
-```
+```js
 import { Provider } from 'react-redux';
 import appStore from '../utils/appStore.js';
 
@@ -644,7 +646,7 @@ createSlice takes 3 inputs, namely:
 3. reducers - this will contain an object full of reducer functions, labelled with an action name.
 
 Syntax: 
-```
+```JS
 import {createSlice} from '@reduxjs/toolkit'; 
 
 const cartSlice = createSlice({
@@ -667,7 +669,7 @@ It is a callback function which takes 2 inputs, `state` and `action`, and update
 
 While exporting we will export both the actions and reducers separately, in the following manner:
 
-```
+```JS
 export const {addItem, removeItem, clearCart} = cartSlice.actions;
 export default cartSlice.reducer;
 ```
@@ -677,7 +679,7 @@ Once we have configured the reducer for the slice, we will also have to setup th
 We will do that by adding a reducer block while creating the store. 
 Syntax is as follows:
 
-```
+```JS
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer from './slices/cartSlice';
 const appStore = configureStore({
@@ -696,7 +698,7 @@ We will use the `useDispatch` to call the action that we exported from the slice
 
 Syntax:
 
-```
+```JS
 import {addItem} from '../utils/slices/cartSlice';
 import {useDispatch} from `react-redux`;
 
@@ -719,7 +721,7 @@ In order to subscribe to the store, we will have to use something called `select
 We will use a hook called `useSelector` to get access to the store.
 
 Syntax:
-```
+```js
 import {useSelector} from 'react-redux';
 
 const cart = useSelector((store) => store.cart.items);
@@ -734,13 +736,13 @@ This is because subscribing using a selector keeps the UI in sync with the data 
 
 Explained with an example:
 
-```
+```js
 const cartItems = useSelector((store) => store.cart.items);
 ```
 
 Is extremely more efficient than:
 
-```
+```js
 const cart = useSelector((store) => store.cart);
 const cartItems = cart.items;
 ```
@@ -763,3 +765,297 @@ RTK states that we have to either mutate the State, or return a new State
 #### Redux DevTools
 
 Use this extension to track the redux store, record dispatches, playback sessions of dispatch calls, browse logs, track diffs in each dispatch, etc.
+
+## Development Testing
+
+There are multiple strategies to test our App, some of which include:
+ - [[#Unit Testing]] - Testing each React component in isolation
+ - Integration Testing - Testing a flow which impacts multiple components that communicate with each other
+ - End-to-End Testing - e2e testing
+
+### React Testing Library
+
+We will use React Testing Library to test our React Components and the React Application
+We will perform only Unit and Integration testing
+
+**React Testing Library uses Jest to perform testing** 
+
+Jest: https://jestjs.io/
+
+#### Setting up React Testing Library
+
+**The consolidated set of steps to set up Jest is as follows:**
+1. Install React Testing Library
+2. Install Jest
+3. Install Babel Dependencies
+4. Configure Babel
+5. Configure Parcel config to override default Parcel Babel transpilation
+6. Init Jest in project using `npx jest --init`
+7. Install `jsdom` library
+8. Install `@babel/preset-react` to make JSX work in test cases
+9. Include `@babel/preset-react` in the babel configuration
+10. Install` @testing-library/jest-dom`
+
+We start by installing `@testing-library/react` and `jest` as devDependencies into our project.
+
+Syntax:
+
+```Node
+npm i -D @testing-library/react
+npm i -D jest
+```
+
+Since Jest uses Babel under the hood, we also have to install the Babel dependencies that Jest requires as well, using the following command:
+
+```Node
+npm install --save-dev babel-jest @babel/core @babel/preset-env
+```
+
+We will also set up the babel.config.js file to configure Babel to the version of node used in the project.
+
+Content of `babel.config.js` will be as follows:
+
+```JS
+module.exports = {
+  presets: [['@babel/preset-env', {targets: {node: 'current'}}]],
+};
+```
+
+Now, we will run into a new issue:
+Parcel already uses its own transpilation service, which will conflict with the Babel that we have configured for Jest.
+To fix this, we will have to disable Babel transpilation in Parcel by overriding the default Parcel config
+We will create a `.parcelrc` config file with the following content:
+```json
+{  "extends": "@parcel/config-default",  "transformers": {    "*.{js,mjs,jsx,cjs,ts,tsx}": [      "@parcel/transformer-js",      "@parcel/transformer-react-refresh-wrap"    ]  }}
+```
+
+We will now run jest in our project using the command:
+`npm run test`
+Since we have configured in our package.json to run jest on using the above command.
+
+#### Jest Configuration
+
+We will have to configure Jest using the command:
+`npx jest --init`
+
+##### JSDOM
+We will use `JSDOM` to run Jest in. `JSDOM`.
+JSDOM is basically a library that parses Browser HTML code in a browser-like environment.
+Jest uses `jsdom` to run its test scenarios.
+
+#### Installing `jsdom`
+
+**From Jest 28 onwards, jsdom has to be installed separately to run jest in our project**
+
+Install jest into the project using the below command:
+
+```
+npm install --save-dev jest-environment-jsdom
+```
+
+#### Setting up test cases
+
+We will create test files in 2 formats, 
+1. Inside `__tests__` as `.js` files, OR
+2. as `*.spec.js` or `*.test.js` files along with the respective components
+
+`__<name>__` is called **dunder files/folders** 
+
+### Writing Test Cases
+
+We will start each test case with the `test` tag. `test` function takes 2 inputs:
+1. First parameter is an string which describes the specific test scenario
+2. Second parameter is a callback function within which we will write the actual test case code.
+**Note: `test` tag can also be replaced with `it` tag. Both are the same, `it` is just an alias.**
+
+Syntax will be as follows:
+```js
+test("'Sum' function should return sum of 2 numbers", () => {
+	// write test cases here
+});
+
+// OR
+
+it("'Sum' function should return sum of 2 numbers", () => {
+	// test and it are the same
+});
+```
+
+
+#### Assertion
+We can do **assertion testing** using `expect` and `toBe` operators.
+
+A sample test case for a component which will return sum of 2 numbers will be as follows:
+```JS
+import {sum} from '../sum.js';
+
+test("'Sum' function should return sum of 2 numbers", () => {
+	const result = sum(4,5);
+	expect(result).toBe(9);
+});
+
+```
+
+
+#### Writing Test Cases for React Components
+
+##### Unit Testing
+Writing test cases for React Components will follow the logic
+**Rendering** -> **Querying** -> **Assertion**
+i.e.:
+1. Render the component into jsdom - **Rendering**
+2. Query by geting each component element from the page. - **Querying**
+3. Expect the element to be present in the render. - **Assertion**
+
+Syntax:
+```JS
+test("Should load heading from 'Contact' component", () => {
+	render(<Contact />);
+	const heading = screen.getByRole('heading');
+	expect(heading).toBeInTheDocument();
+});
+```
+
+But this will throw an error if we try to run the test case. The error will state something along the lines of: `The imported JSX is not parseable by Jest`
+
+###### Fixing JSX not parseable issue
+
+Jest does not allow parsing/testing of JSX components out of the box. So in order to make it possible, we will add another babel package known as `@babel/preset-react`.
+
+We will also add configuration for this new babel package in the configs as well.
+
+npm install syntax:
+```
+npm i -D @babel/preset-react
+```
+
+updated babel.config.js:
+
+```JS
+module.exports = {
+    presets: [
+        ['@babel/preset-env', { targets: { node: 'current' } }],
+        ['@babel/preset-react', { runtime: 'automatic' }]
+    ],
+};
+```
+
+We are adding the `runtime: 'automatic'` tag along with the configuration here.
+
+This will throw an error again if we try to run the test case. The new error will state something along the lines of: `expect(heading).toBeInTheDocument() is not a function`.
+
+###### Fixing the `toBeInTheDocument is not a function` issue
+
+This error is thrown because we dont have this functionality available from base Jest.
+
+We will have to add a new library to our project, since many dom test functions are not provided by jest in default.
+The library we have to add is called `@testing-library/jest-dom` 
+
+Command:
+```
+npm i -D @testing-library/jest-dom
+```
+
+Now, our test cases will run fine, as all functionalities are now available.
+
+###### Getting elements in Jest
+
+While writing test cases for elements in a page, we can write multiple methods.
+`jest-dom` offers multiple methods, some of which include:
+1. getByRole() - returns element of the mentioned role type.7u
+2. getByText() - returns element that contain that text in the rendered component.
+3. getByAltText() - return image that contain the specific alt text
+4. getByPlaceholderText() - return element that contain the specific placeholder text
+5. etc.
+
+If you want to test for all the elements of a particular role, placeholder, alt text etc, we have to use the `getAllBy<attribute>` functions, where `<attribute>` will be the `Role`, `AltText`, `Text` etc.
+
+We will test for multiple elements using the `elements.length` property
+
+eg:
+```js
+expect(elements.length).toBe(2)
+```
+
+###### Grouping Test Cases
+
+Consider a scenario where we have a large number of test cases that can be grouped on the basis of some criteria, we can do so using `describe`
+
+Syntax:
+```js
+describe('Test cases for X component', () => {
+	test('test1', () => {});
+	test('test2', () => {})
+	test('test3', () => {})
+});
+```
+
+Note: `describe` blocks can be nested also
+
+###### Writing Unit test cases for complex components which use Redux and React Router
+
+Jest is not capable of parsing components where redux stores are used, Or contain react-router , or any third party library components.
+So, when writing test cases for such components, we have to add them to the test cases itself.
+
+In the case of components that use Redux, we need to wrap the component we are testing in a `Provider` component, and pass the store to the `Provider`.
+
+Syntax:
+
+```
+render(
+	<Provider store={appStore}>
+		<Component />
+	</Provider>	
+);
+```
+
+
+In the case of components that contain react-router components like `Link`, we will have to wrap our component in `BrowserRouter` component
+
+Syntax:
+```
+render(
+	<BrowserRouter>
+		<Component />
+	</BrowserRouter>	
+);
+```
+
+Most of the time we will have to nest both the above solutions like so:
+```
+render(
+	<BrowserRouter>
+		<Provider store={appStore}>
+			<Component />
+		</Provider>
+	</BrowserRouter>	
+);
+```
+
+###### Triggering actions on elements in a component from test case file
+
+When writing test cases for react components, we will also require to test the click/hover/keypress etc. events on the elements in the component.
+In order to test this, we can make use of the `fireEvent` function offered by `@testing-library/react`.
+
+Syntax:
+```js
+import { fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+
+it('Should update component on click', () => {
+    render(
+        // We will wrap with a BrowserRouter, since Jest is not aware of react-router-dom
+        <BrowserRouter>
+            {/* We will wrap the entire Header in a Provider since Header uses Redux slices and Redux Store, which Jest is not aware of */}
+            <Provider store={appStore}>
+                <Component />
+            </Provider>
+        </BrowserRouter>
+    );
+
+    const componentElement = screen.getByText('ComponentLabel');
+    fireEvent.click(componentElement);
+    expect(componentElement).toHaveTextContent('ChangedComponentLabel');
+});
+```
+
